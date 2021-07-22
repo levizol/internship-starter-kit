@@ -91,3 +91,209 @@ button:hover {
     from {transform: rotate(0);}
     to {transform: rotate(180deg);}
 }
+
+.col-container {
+    display: block;
+    margin: auto;
+    color: red;
+}
+
+.col-container-flex{
+    display: flex;
+    width: 100%;
+    color: rgb(136, 136, 136);
+    font-weight: normal;
+    font-size: 16pt;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    align-items: stretch;
+   
+}
+
+main > .col-container-flex{
+    overflow-y:scroll;
+    height: 70%;
+}
+.column {
+    flex: 1;
+    padding: 16px;
+    
+}
+
+.data{
+    background-color: #edf0f3;
+    margin: 5px ;
+    min-height: 1000px;
+    padding: 10px;
+    bottom:0;
+}
+
+.data:hover {
+    background-color: #b7bbbe;
+}
+
+.label {
+
+    background-color: white;
+    display: block;
+    text-align: left;
+    top: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.addition, .delete {
+    color : rgb(143, 143, 143)(59, 57, 57)(65, 63, 63)(65, 63, 63);
+    margin-right: 10px;
+}
+
+.popup{
+    background-color: white;
+    border: 3px solid black;
+    width: 80%;
+    height:600px;
+    position: fixed;
+    top:5%;
+}
+
+.container-flex{
+    display: flex;
+    width: 100%;
+    font-weight: normal;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+   
+}
+
+.save {
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    margin-top: 60%;
+}
+
+.input{
+    display: block;
+    margin: auto;
+    margin-top: 15%;
+}
+
+
+
+.input label {
+    float: left;
+}
+
+.input .row{
+    margin-top: 10px;
+}
+
+.card{
+    background-color: white;
+    width: 90%;
+    margin: auto;
+    border-radius: 10px;
+    border-left:5px solid rgb(193, 211, 29);
+    max-width: 300px;
+    font-size: 12pt;
+    margin-bottom: 10px;
+    min-height: 150px;
+    padding: 10%;
+    padding-right: 0px;
+}
+
+.card:hover{
+    background-color: rgb(166, 228, 247);
+}
+
+.remaining{
+   
+    background-color: rgb(224, 222, 222);
+    color:white;
+    border-radius: 50%;
+    width: 20%;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    text-align:justify;
+    font-size: 10pt;
+    margin-bottom: 10px;
+    display: inline-block;
+
+}
+
+.card .title{
+    color: black;
+}
+
+.card .filter{
+    font-style: italic;
+    margin-bottom: 50px;
+}
+
+.information {
+    background-color: white;
+    border: 3px solid black;
+    width: 30%;
+    height: 100%;
+    position: fixed;
+    top:0%;
+    right:0%;
+}
+
+
+
+.information .left {
+    text-align: left;
+    color:rgb(136, 136, 136);
+    padding-left: 30px;
+}
+
+.information .right{
+    text-align: right;
+    padding-right: 30px;
+}
+
+.det{
+    margin-top: 40px;
+}
+
+.information .row {
+    margin: 20px;
+}
+
+.add .st{
+    display: inline;
+    background-color: green;
+    color: white;
+    font-size: 10pt;
+    
+}
+
+.information {
+    padding-top: 10%;
+}
+
+.error {
+    color: red;
+    font-size: 10pt;
+}
+
+.goLeft {
+    margin-left: -30%;
+}
+
+#remaining {
+    border : none;
+}
+
+.information .bt {
+    background-color: white;
+    color: black;
+    margin : none;
+    display: block;
+}
+
+.bt:hover {
+    background-color: white;
+}

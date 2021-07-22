@@ -8,3 +8,4 @@ const cta = new CallToAction(document.querySelector('.button-cta'));
 button.registerEvents();
 cta.registerEvents();
 cta.changeBgColor();
+
