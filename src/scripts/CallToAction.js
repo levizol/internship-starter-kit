@@ -1,9 +1,9 @@
 import Button from './Button';
-/** Class representing the CTA Button.
+/** Class representing the CTA Button;
  *  @extends Button
  */
 class CallToAction extends Button {
-  defaultColor = '#d7d149'
+  defaultColor = '#d7d149';
   /**
  * Create a button.
  * @param {HTMLElement} element - The button element.

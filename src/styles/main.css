@@ -3,6 +3,8 @@
     --secondary-color: #d7d149;
     --complementary-color: #edf2f6;
     --button-hover-color: #537ba4;
+    --column-backgroud : linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    --span-hover-color: rgb(213, 243, 145);
 
     font-size: 62.5%;
 }
@@ -18,8 +20,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
-    font: 400 2rem/1.4 'Poppins', Helvetica, Arial, sans-serif;
+    /* font-family: 'Raleway', sans-serif; */
+    font: 500 2rem/1.4 'Raleway', sans-serif;
 }
 
 header {
@@ -33,8 +35,10 @@ main {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-
     text-align: center;
+}
+i {
+    cursor: pointer;
 }
 
 footer {
@@ -82,12 +86,343 @@ button:hover {
 .button, .button-cta {
     transition: transform 500ms cubic-bezier(1, 0.01, 0.57, 1.35);
 }
+.board {
+    font-size: small;
+    width: 100vh;
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: stretch;
+}
+.columnHeader {
+    position: relative;
+    display: flex;
+    height: 50px;
+    font-weight: 600;
+    border-radius: 5px;
+    border-width: 2px;
+    justify-content: space-between;
+    align-items: center;
+    background-image: var(--column-backgroud);
+    padding: 10px;
+}
+.columnID {
+    display: none;
+}
+.col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    margin:10px;
+    min-width: 250px;
+    width: auto;
+    max-width: 300px;
+    animation: scaleIn 0.5s ease;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 2px;
+    justify-content: flex-start;
+    background-image: var(--column-backgroud);
+    height: 100%;
+}
+.ticket {
+    background-color:white;
+    border-radius: 6px;
+    border-left:4px solid red;
+    margin: 8px;
+    animation: scaleIn 0.5s ease-in;
+    position: relative;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+.ticketNr,.ticketLabel {
+    font-size: 10px;
+}
+.ticketID {
+    display: none;
+}
+.ticketRemaining {
+    position: absolute;
+    right: 10px;
+    background-color: rgb(173, 171, 171);
+    bottom: 10px;
+    border-radius: 3rem;
+    padding: 5px;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.modalContent {
+    animation-name: sweepModal;
+    animation-duration: 1s;
+    margin: auto;
+    padding: 20px;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    display: flex;
+    border-radius: 2rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #888;
+    width: 60%;
+}
+.buttonWrapper {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-around;
+  }
 
+.ticket:hover{
+    background-color: rgb(143, 210, 248);
+}
+.toDoColumn {
+    order: 1;
+}
+.doneColumn {
+    order: 999;
+}
+.column {
+    order: 2;
+}
 .active {
     transform: translateY(50%);
+}
+.columnActions {
+    animation: fadeIn 0.5s ease;
+    display: none;
+    padding: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.editButton {
+    position: relative;
+}
+.editOptions{
+  visibility: hidden;
+  width: 150px;
+  background-color: #555;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+.editOptions span {
+    cursor: pointer;
+    padding: 10px;
+}
+.editOptions span:hover{
+    color:var(--span-hover-color);
+}
+.editButton .editShow {
+    visibility: visible;
+    animation: fadeIn 0.5s;
+}
+.ticket .editTicketShow {
+    animation: scaleIn 0.5s forwards;
+    display: flex;
+}
+.ticket .editTicketHide {
+    display: none;
+}
+.editTicket {
+  width: 380px;
+  background-color: white;
+  display: none;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 3px;
+  border: 3px solid gray;
+  padding: 8px 0;
+  position:fixed;
+  z-index: 1;
+  top: 10%;
+  right: 10px;
+  /* margin-left: -100px; */
+}
+.editTicket * {
+    color: black;
+}   
+.editTicketContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    padding: 12px;
+}
+.editTicketHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.editTicketOptions {
+    /* position: relative; */
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+    padding: 8px;
+}
+.editTicketNumber {
+    margin-left: 50px;
+    color:rgb(79, 79, 255);
+}
+.editTicketDetails {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 25%;
+}
+.editTicketWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+}
+.editTicketOptions i:hover{
+    color: rgb(213, 243, 145);
+}
+input.ticketRemainingEdit{
+    width: 120px;
+}
+input.ticketRemainingEdit:focus {
+    outline: none !important;
+    border:1px solid blue;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+.editTicketStatusColor {
+    /* background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
+    background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+    height: 20px;
+    color: white;
+    padding: 2px;
+}
+.editRemaining {
+    /* display: flex; */
+    align-items: center;
+    position: relative;
+    justify-content: space-evenly;
+    display: none;
+}
+.remainingLabel {
+    position: absolute;
+    top: 105%;
+    right: 28%;
+    font-size: 9px;
+    display: none;
+    width: 100px;
+    background-color: black;
+    padding: 5px;
+    animation: fadeIn 0.5s ease-in;
+    border-radius: 1rem;
+    color: white;
+}
+.inputButtons {
+    position: absolute;
+    top: 70%;
+    right: -30px;
+    font-size: 20px;
+    align-items: center;
+    justify-content: space-evenly;
+    display: none;
+    width: 100px;
+    padding: 5px;
+    animation: fadeIn 0.5s ease-in;
+    color: white;
+}
+.pen {
+    margin:3px;
+}
+
+.deleteTicketButton {
+    position: relative;
+}
+.deleteTicketOption {
+  visibility: hidden;
+  width: 150px;
+  background-color: #555;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+.deleteTicketOption span {
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+}
+.deleteTicketOption span:hover {
+    color:var(--span-hover-color);
+}
+.deleteTicketShow {
+    visibility: visible;
+    animation: fadeIn 0.5s ease-in;
 }
 
 @keyframes rotate {
     from {transform: rotate(0);}
     to {transform: rotate(180deg);}
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+@keyframes sweepModal {
+    0% {
+      transform: translateY(-100px);
+    }
+    100% {
+      transform: translateY(0);  
+    }
+}
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }   
+}
+@keyframes scaleOut {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.5);
+    }
+    
 }
