@@ -1,7 +1,96 @@
 <main>
-    <img class="decoration" src="./images/decoration.png" alt="decoration">
-    <h2>Hello Awesome App!</h2>
-    <p>To get started edit a file in "./src" and save to reload.</p>
-    <button class="button-cta">Get Started!</button>
-    <button class="button">Find out more</button>
+
+    <div class="addColumnBtn">
+        <input type="text" class="colName">
+        <button class="add">Add</button>
+    </div>
+
+    <div id="mainContainer">
+
+        <!-- First column -->
+        <!-- <div class="column defaultColumn">
+            <div class="columnHeader">
+                <div class="columnTitle">To Do</div>
+                <div class="addColumn">+</div>
+            </div>
+
+            <div class="columnBody"> -->
+
+        <!-- Card -->
+        <!-- <div class="cardContainer">
+                    <div class="issueInfo">
+                        <div class="issueNumber">Iss - 006</div>
+                        <div class="cardName">Issue tittle</div>
+                    </div>
+
+                    <div class="filter"><i>None</i></div>
+                    <div class="remainingTime">2h</div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <!-- Last column -->
+        <!-- <div class="column">
+            <div class="columnHeader defaultColumn">
+                <div class="columnTitle">Done</div>
+                <div class="addColumn">+</div>
+            </div> -->
+
+        <!-- <div class="columnBody"> -->
+
+        <!-- Card -->
+        <!-- <div class="cardContainer">
+                    <div class="issueInfo">
+                        <div class="issueNumber">Iss - 007</div>
+                        <div class="cardName">Issue tittle</div>
+                    </div>
+
+                    <div class="filter"><i>None</i></div>
+                    <div class="remainingTime">2h</div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <!-- Column template -->
+    <template id="tempColumn">
+        <div class="column" data-column-id>
+            <div class="columnHeader">
+                <div class="columnTitle">Done</div>
+                <div class="editColumn">
+                    <div class="edit">...</div>
+                    <div class="addColumn" data-column-id>+</div>
+                </div>
+
+            </div>
+
+            <div class="columnBody">
+
+                <!-- Add card template -->
+
+            </div>
+
+        </div>
+        </div>
+    </template>
+
+
+    <!-- Card template-->
+    <template id="tempCard">
+        <div class="cardContainer">
+
+            <div class="issueInfo">
+                <div class="issueNumber">Issue number</div>
+                <div class="cardName">Iss 004</div>
+            </div>
+
+            <div class="filter"><i>None</i></div>
+            <div class="remainingTime">2h</div>
+
+        </div>
+    </template>
+
+
+
 </main>

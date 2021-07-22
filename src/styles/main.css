@@ -1,93 +1,102 @@
-:root {
-    --primary-color: #1a3755;
-    --secondary-color: #d7d149;
-    --complementary-color: #edf2f6;
-    --button-hover-color: #537ba4;
-
-    font-size: 62.5%;
-}
-
-*, *:before, *:after {
+body {
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    height: 100vh;
+/* Main container */
+#mainContainer {
+    width: 95%;
+    min-height: 800px;
+    margin: 50px auto;
+    padding: 2px 5px;
+    display: flex;
+    column-gap: 15px;
+}
 
+/* Column component*/
+.column {
+    width: 300px;
+    background-color: #f4f5f7;
+    border-radius: 0 0 4px 4px;
+    padding: 5px 2px;
+    position: relative;
+}
+
+.columnHeader,
+.editColumn {
+    padding: 5px;
+    color: #5e6c84;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    position: sticky;
+    top: 0px;
+    z-index: 1;
+}
+
+.editColumn {
+    display: none;
+}
+
+.editColumn > * {
+    cursor: pointer;
+}
+
+.columnHeader:hover .editColumn {
+    display: flex;
+    width: 100%;
+}
+
+.columnHeader:not(.last):hover .columnTitle {
+    display: none;
+}
+
+.first:hover {
+    justify-content: flex-end;
+}
+
+.first:hover .editColumn{
+    width: unset;
+}
+
+.addColumn {
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.columnBody {
+    padding: 0px 3px;
+}
+
+/* End column component */
+
+/* Card component */
+
+.cardContainer {
+    border-radius: 2px;
+    border-left: 3px solid #cc3366;
+    box-shadow: 0 1px 2px 0 rgb(9 30 66 / 25%);
+    height: 110px;
+    margin: 7px 2px;
+    background-color: #fff;
+    cursor: move;
+    transition: 0.3s all;
+    padding: 10px 15px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    
-    font: 400 2rem/1.4 'Poppins', Helvetica, Arial, sans-serif;
+    gap: 12px;
 }
 
-header {
-    width: 100%;
-    padding: 30px 10px;
-    background-color: var(--primary-color);
-    text-align: center;
+.cardContainer:hover {
+    background: #f5f5f5;
+    border-color: #999;
+    border-left: 3px solid #cc3366;
 }
 
-main {
-    width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-
-    text-align: center;
-}
-
-footer {
-    padding: 30px 10px;
-    text-align: center;
-    background-color: var(--complementary-color);
-}
-
-h1 {
-    color: #FFFFFF;
-    font-size: 3.5rem;
-    font-weight: 600;
-}
-
-button {
-    margin: 5px;
-    padding: 13px 25px;
-    border: none;
-    border-radius: 4px;
-
-    background-color: var(--primary-color);
-    color: #FFFFFF;
-    letter-spacing: 0.04em;
-    cursor: pointer;
-
-    transition: background-color 150ms ease;
-}
-
-button:hover {
-    background-color: var(--button-hover-color)!important;
-}
-
-.logo {
-    margin: 20px;
-}
-
-.secondary-color {
-    color: var(--secondary-color);
-}
-
-.decoration {
-    animation: rotate 2000ms linear infinite;
-}
-
-.button, .button-cta {
-    transition: transform 500ms cubic-bezier(1, 0.01, 0.57, 1.35);
-}
-
-.active {
-    transform: translateY(50%);
-}
-
-@keyframes rotate {
-    from {transform: rotate(0);}
-    to {transform: rotate(180deg);}
+.addColumnBtn {
+    display: none;
+    z-index: 10;
 }
