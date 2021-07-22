@@ -9,17 +9,79 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/92f218b144.js" crossorigin="anonymous"></script>
+
 
     <title>Internship Starter Kit</title>
 </head>
 
 <body>
 
-    <include src="templates/header.html"></include>
+    <div id="jira-board">
+        <div id="modal">
+            <div id="modal-content">
+                <span class="close">&times;</span>
+                <form>
+                    <label for="name">Ticket Name:</label><br>
+                    <input type="text" id="ticketName" name="ticketName"><br>
+                    <label for="description">Ticket Description <i>(30 char max)</i>:</label><br>
+                    <textarea id="description" name="description" maxlength="30"></textarea><br>
+                    <input type="submit" value="Save Ticket"  name="saveTicket" id="saveTicket">
+                  </form>
+            </div>
+        </div>
+        <div class="toDo">
+            <h4 class="title">To Do</h4>
+            <div class="toDo-content content-column">
+                <!-- <div class="newToDo-1" draggable="true" data-id="11">
+                    <div class="newToDo-ID">TEST-99999</div>
+                    <div class="newTodo-name">TEST FOR DRAG AND DROP API</div>
+                    <div class="newTodo-description"> description</div>
+                </div>
+                <div class="newToDo-1" draggable="true" data-id="21">
+                    <div class="newToDo-ID">TEST-99999</div>
+                    <div class="newTodo-name">TEST FOR DRAG AND DROP API</div>
+                    <div class="newTodo-description"> description</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="inProgress">
+            <h4 class="title">In Progress</h4>
+            <div class="inProgress-content content-column"></div>
+        </div>
+        <div class="review">
+            <h4 class="title">Review</h4>
+            <div class="review-content content-column"></div>
+        </div>
+        <div class="inTesting">
+            <h4 class="title">In Testing</h4>
+            <div class="inTesting-content content-column"></div>
+        </div>
+        <!-- <div class="testColumn">
+            <h4 class="title-test">Coloana Test
+                <span class="addColumn"></span> 
+            </h4>
+            <div class="addColumn-content"></div>
+        </div> -->
+        <div class="acceptancePO">
+            <h4 class="title">Acceptance PO</h4>
+            <div class="acceptancePO-content content-column"></div>
+        </div>
+        <div class="done">
+            <h4 class="title">Done</h4>
+            <div class="done-content content-column"></div>
+        </div>
+    </div>
+
+    
+
+    <!-- <include src="templates/header.html"></include>
     <include src="templates/main.html"></include>
-    <include src="templates/footer.html"></include>
+    <include src="templates/footer.html"></include> -->
 
     <script src="scripts/index.js"></script>
+   
+
 
 </body>
 
