@@ -14,5 +14,8 @@
     "eslint-config-google": "^0.14.0",
     "parcel-bundler": "^1.12.5",
     "posthtml-include": "^1.7.1"
+  },
+  "dependencies": {
+    "templates": "^1.2.9"
   }
 }
