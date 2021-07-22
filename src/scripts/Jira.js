@@ -113,6 +113,8 @@ hideElement .forEach((x)=>{
   });
 });
 
+updateNr();
+
 document.querySelector('#addcard').addEventListener('click', saveCard);
 /** *
  *
@@ -172,8 +174,13 @@ function addColumn() {
   labeld.appendChild(j);
 
   const label = document.createElement('div');
+  const nr = document.createElement('div');
+  nr.classList.toggle('nr');
+
+
   label.classList.toggle('label');
   label.innerHTML = 'New column';
+  label.appendChild(nr);
 
   label.addEventListener('dblclick', changeName);
   label.onmouseover = function() {
@@ -239,6 +246,7 @@ function addColumn() {
 
   dataNode.innerHTML = ' ';
   insertAfter( where, newNode);
+  updateNr();
 }
 
 
@@ -280,10 +288,14 @@ function addColumnatFirst() {
   labela.appendChild(i);
   labeld.appendChild(j);
 
+  const nr = document.createElement('div');
+  nr.classList.toggle('nr');
+
   const label = document.createElement('div');
   label.classList.toggle('label');
   label.innerHTML = 'New column';
   label.classList.toggle('name');
+  label.appendChild(nr);
   label.addEventListener('dblclick', changeName);
   labela.classList.toggle('hide');
 
@@ -341,6 +353,7 @@ function hide() {
  */
 function allowDrop(ev) {
   ev.preventDefault();
+  updateNr();
 }
 
 /**
@@ -488,6 +501,7 @@ function saveCard() {
   cards.push(card);
   cards = JSON.stringify(cards);
   localStorage.setItem('cardDetails', cards);
+  updateNr();
 }
 
 
@@ -535,6 +549,7 @@ function deleteCard() {
   cards[lastCard].visibility = 0;
   cards = JSON.stringify(cards);
   localStorage.setItem('cardDetails', cards);
+  updateNr();
 }
 
 /**
@@ -588,4 +603,21 @@ function changeName() {
 function detdet() {
   document.querySelector('.information .add')
       .classList.toggle('hide');
+}
+
+
+function updateNr() {
+  let cards = localStorage.getItem('cardDetails');
+  cards = JSON.parse(cards);
+  let colnr = localStorage.getItem('colnr');
+  let parents = localStorage.getItem('parentofCards');
+  parents = JSON.parse(parents);
+  colnr = JSON.parse(colnr);
+  for (let i=1; i<=colnr; i++) {
+    let nr = 0;
+    for (let j=1; j<parents.length; j++) {
+      if (parents[j]==i && cards[j].visibility) nr++;
+    }
+    document.querySelector('#col' + i + ' .nr').innerHTML = nr;
+  }
 }

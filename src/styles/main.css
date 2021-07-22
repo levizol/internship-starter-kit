@@ -297,3 +297,7 @@ main > .col-container-flex{
 .bt:hover {
     background-color: white;
 }
+
+.nr {
+    display: inline;
+}

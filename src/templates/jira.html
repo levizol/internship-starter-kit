@@ -9,7 +9,7 @@
             <div class = 'col-container-flex'>
                 <div class='label addition'><i class="far fa-plus-square"></i></div>
                 <div class='label delete'><i class="far fa-minus-square"></i></div>
-                <div class='label name'>TO DO </div>
+                <div class='label name'>TO DO <div class='nr'>0</div> </div>
             </div>
             
             <div class='data' ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -23,7 +23,7 @@
         <div class = 'column' id='col2'>
             <div class = 'col-container-flex'>
                 <div class='label addition'> </i></div>
-                <div class='label'>DONE</div>
+                <div class='label'>DONE<div class='nr'>0</div></div>
             </div>
             <div class= 'data' ondrop="drop(event)" ondragover="allowDrop(event)">
                 
@@ -171,9 +171,23 @@
             whereArray[cardid] = colid;
             whereArray = JSON.stringify(whereArray);
             localStorage.setItem('parentofCards', whereArray);
-         
+            updateNr();
         }
-
+        function updateNr() {
+        let cards = localStorage.getItem('cardDetails');
+        cards = JSON.parse(cards);
+        let colnr = localStorage.getItem('colnr');
+        let parents = localStorage.getItem('parentofCards');
+        parents = JSON.parse(parents);
+        colnr = JSON.parse(colnr);
+        for (let i=1; i<=colnr; i++) {
+            let nr = 0;
+            for (let j=1; j<parents.length; j++) {
+            if (parents[j]==i && cards[j].visibility) nr++;
+            }
+            document.querySelector('#col' + i + ' .nr').innerHTML = nr;
+            }
+        }
     </script>
     
 </main>
