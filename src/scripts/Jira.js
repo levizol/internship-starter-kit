@@ -1,6 +1,5 @@
 /* eslint-disable max-len *//* eslint-disable require-jsdoc *//* eslint-disable no-unused-vars *//* eslint-disable no-invalid-this *//* eslint-disable linebreak-style */
 
-
 class Card {
   constructor(title, remaining, number) {
     this.title = title;
@@ -60,6 +59,9 @@ document.querySelector('.information button')
 document.querySelector('.det')
     .addEventListener('click', detdet);
 
+document.querySelector('.saveCol')
+    .addEventListener('click', saveCol);
+
 
 if (!localStorage.getItem('cardDetails')) {
   let cardDetails = [];
@@ -94,6 +96,8 @@ columLabels.forEach( (x) => {
     sibling[1].classList.toggle('hide');
   };
 });
+
+let lastColumn = 0;
 
 const columnData = document.querySelectorAll('.data');
 columnData.forEach((x)=>{
@@ -180,23 +184,29 @@ function addColumn() {
 
   label.classList.toggle('label');
   label.innerHTML = 'New column';
-  label.appendChild(nr);
+  label.classList.toggle('name');
 
   label.addEventListener('dblclick', changeName);
-  label.onmouseover = function() {
+  containerNode.onmouseover = function() {
     labela.classList.toggle('hide');
     labeld.classList.toggle('hide');
+    label.classList.toggle('hide');
+    nr.classList.toggle('hide');
   };
 
-  label.onmoseout = function() {
+  containerNode.onmoseout = function() {
+    alert('out');
     labela.classList.toggle('hide');
     labeld.classList.toggle('hide');
+    label.classList.toggle('hide');
+    nr.classList.toggle('hide');
   };
 
 
   containerNode.appendChild(labela);
   containerNode.appendChild(labeld);
   containerNode.appendChild(label);
+  containerNode.appendChild(nr);
   const dataNode = document.createElement('div');
   dataNode.classList.toggle('data');
   dataNode.setAttribute('ondrop', 'drop(event)');
@@ -226,13 +236,14 @@ function addColumn() {
     current.setAttribute('id', `col${i+1}`);
 
     for (let j=1; j<whereArray.length; j++) {
-      if (whereArray[j]==i) whereArray[j] = j+1;
+      if (whereArray[j]==i) whereArray[j] = i+1;
     }
 
     titles[i+1] = titles[i];
   }
 
   titles[before+1]='New column';
+
 
   titles = JSON.stringify(titles);
   localStorage.setItem('titles', titles);
@@ -247,6 +258,8 @@ function addColumn() {
   dataNode.innerHTML = ' ';
   insertAfter( where, newNode);
   updateNr();
+  saveCol();
+  changeName(before+1);
 }
 
 
@@ -264,7 +277,7 @@ function addColumnatFirst() {
 
 
   const containerNode = document.createElement('div');
-  containerNode.setAttribute('class', 'col-container-flex');
+  containerNode.classList.toggle( 'col-container-flex');
 
   const labela = document.createElement('div');
   labela.classList.toggle('label');
@@ -291,22 +304,27 @@ function addColumnatFirst() {
   const nr = document.createElement('div');
   nr.classList.toggle('nr');
 
+
   const label = document.createElement('div');
   label.classList.toggle('label');
   label.innerHTML = 'New column';
   label.classList.toggle('name');
-  label.appendChild(nr);
-  label.addEventListener('dblclick', changeName);
-  labela.classList.toggle('hide');
 
-  label.onmouseover = function() {
+  label.addEventListener('dblclick', changeName);
+
+
+  containerNode.onmouseover = function() {
     labela.classList.toggle('hide');
     labeld.classList.toggle('hide');
+    label.classList.toggle('hide');
+    nr.classList.toggle('hide');
   };
 
-  label.onmoseout = function() {
+  containerNode.onmoseout = function() {
     labela.classList.toggle('hide');
     labeld.classList.toggle('hide');
+    label.classList.toggle('hide');
+    nr.classList.toggle('hide');
   };
 
 
@@ -314,6 +332,7 @@ function addColumnatFirst() {
   containerNode.appendChild(labeld);
 
   containerNode.appendChild(label);
+  containerNode.appendChild(nr);
   const dataNode = document.createElement('div');
   dataNode.classList.toggle('data');
   dataNode.setAttribute('ondrop', 'drop(event)');
@@ -401,7 +420,8 @@ function showDet() {
   parents = JSON.parse(parents);
   document.querySelector('.information .st').innerHTML = titles[parents[id]];
 
-  const colnr = localStorage.getItem('colnr');
+  let colnr = localStorage.getItem('colnr');
+  colnr = JSON.parse(colnr);
   if (parents[id] === 1 || parents[id]===colnr ) {
     document.querySelector('.information .st').style.backgroundColor = 'green';
   } else {
@@ -442,6 +462,14 @@ document.addEventListener(
           saveCard();
         }
       }
+
+      /* if (!document.querySelector('.changeColName').classList.contains('hide')) {
+        if (!event.target.matches('.changeColName') &&
+        !event.target.matches('.colName') &&
+        !event.target.matches('.saveCol')) {
+          document.querySelector('.changeColName').classList.toggle('hide');
+        }
+      }*/
     },
 );
 
@@ -563,6 +591,8 @@ function deleteColumn() {
   let parents = localStorage.getItem('parentofCards');
   parents = JSON.parse(parents);
 
+  let titles = localStorage.getItem('titles');
+  titles = JSON.parse(titles);
 
   this.parentNode.parentNode.remove();
   let colnr = localStorage.getItem('colnr');
@@ -571,17 +601,25 @@ function deleteColumn() {
     current.setAttribute('id', `col${i-1}`);
   }
 
+  for (let i=col; i<colnr; i++) {
+    titles[i] = titles[i+1];
+  }
+  titles.pop();
+  titles = JSON.stringify(titles);
+  localStorage.setItem('titles', titles);
 
   colnr--;
   localStorage.setItem('colnr', colnr);
   location.reload();
 }
 
+
 /**
- *
+ * 
+ * @param {*} first -on which column to put event
  */
-function changeName() {
-  const name = prompt('Please enter the new column name');
+function changeName(first = null) {
+  /* const name = prompt('Please enter the new column name');
 
   if (name != null) {
     this.innerHTML = name;
@@ -594,9 +632,41 @@ function changeName() {
     titles[colid] = name;
     titles = JSON.stringify(titles);
     localStorage.setItem('titles', titles);
+  }*/
+  try {
+    lastColumn = this.parentElement.parentElement.getAttribute('id');
+    lastColumn = lastColumn.substring(3, lastColumn.length);
+    lastColumn = parseInt(lastColumn);
+  } catch (err) {
+    lastColumn = first;
+  } finally {
+    document.querySelector('.changeColName').classList.toggle('hide');
   }
 }
 
+function saveCol() {
+  const name = document.querySelector('.colName').value;
+  if (document.querySelector('.error2').classList.contains('hide')) {
+    document.querySelector('.error2').classList.toggle('hide');
+  }
+  if (name.length<3) {
+    document.querySelector('.error2').classList.toggle('hide');
+  } else {
+    if (!document.querySelector('.error2').classList.contains('hide')) {
+      document.querySelector('.error2').classList.toggle('hide');
+    }
+    const colid = lastColumn;
+    document.querySelector('#col'+colid).querySelector('.name').innerHTML = name;
+
+    let titles = localStorage.getItem('titles');
+    titles = JSON.parse(titles);
+    titles[colid] = name;
+    titles = JSON.stringify(titles);
+    localStorage.setItem('titles', titles);
+    document.querySelector('.changeColName').classList.toggle('hide');
+  }
+  document.querySelector('.colName').value='';
+}
 /**
  *
  */
@@ -621,3 +691,4 @@ function updateNr() {
     document.querySelector('#col' + i + ' .nr').innerHTML = nr;
   }
 }
+

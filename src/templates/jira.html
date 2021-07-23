@@ -9,7 +9,8 @@
             <div class = 'col-container-flex'>
                 <div class='label addition'><i class="far fa-plus-square"></i></div>
                 <div class='label delete'><i class="far fa-minus-square"></i></div>
-                <div class='label name'>TO DO <div class='nr'>0</div> </div>
+                <div class='label name'>TO DO  </div>
+                <div class='nr'>0</div>
             </div>
             
             <div class='data' ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -23,7 +24,8 @@
         <div class = 'column' id='col2'>
             <div class = 'col-container-flex'>
                 <div class='label addition'> </i></div>
-                <div class='label'>DONE<div class='nr'>0</div></div>
+                <div class='label'>DONE</div>
+                <div class='nr'>0</div>
             </div>
             <div class= 'data' ondrop="drop(event)" ondragover="allowDrop(event)">
                 
@@ -136,9 +138,28 @@
             
     </div>
         
+    <div class = 'changeColName hide' id='changeColName'>
+
+     
+            <div class="row">
+                <div class='col-sm '>
+                    New column name:
+                        <span class = 'error2 error'>Must contain at least 3 charachters</span>
+                        <input type="text" class='colName'>
+                        <button class='saveCol'>Save</button>
+                </div>
+                <div class='col-sm-1 close'>
+                    <i class="far fa-window-close"></i>
+                </div>
+            </div>
+        
+        
+    </div>
+
+    <div class = 't'>
     <h2>Drag and Drop</h2>
     <p>Drag the card back and forth between columns.</p>
-
+    </div>
 
     <script>
         $(document).ready(function(){
