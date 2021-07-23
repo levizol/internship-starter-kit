@@ -1,6 +1,8 @@
-/* eslint-disable require-jsdoc */
+/* import-urile*/
 import '../styles/main.css';
 import '../templates/main.html';
+
+/* ----------------------- on hover (header) --------------------------*/
 
 const header = document.querySelectorAll('.header');
 
@@ -12,26 +14,43 @@ for (let i = 0; i < header.length; i++) {
 /**
  * Enter in the header section (hover a+)
  * Make the title invisible and the edit and add options visible
+ * ** PS: elementele din html au si copii de tip text, coloanele adaugate nu,
+ *                    de aici si indecsii respectivi
 */
 function enterHeader() {
   const col = event.target.closest('.header').childNodes;
-  col[1].style.display = 'none';
-  col[3].style.display = 'block';
-  col[5].style.display = 'block';
+  if (col[2].nodeName === '#text') {
+    col[1].style.display = 'none';
+    col[3].style.display = 'block';
+    col[5].style.display = 'block';
+  } else {
+    col[0].style.display = 'none';
+    col[1].style.display = 'block';
+    col[2].style.display = 'block';
+  }
 }
 
 /**
  * Leave the header section (unhover a+)
  * Make the title of the column visible and the others ('+', '...') invisible
+ * ** PS: elementele din html au si copii de tip text, coloanele adaugate nu
 */
 function leaveHeader() {
   const col = event.target.closest('.header').childNodes;
-  col[1].style.display = 'block';
-  col[3].style.display = 'none';
-  col[5].style.display = 'none';
+  if (col[2].nodeName === '#text') {
+    col[1].style.display = 'block';
+    col[3].style.display = 'none';
+    col[5].style.display = 'none';
+  } else {
+    col[0].style.display = 'block';
+    col[1].style.display = 'none';
+    col[2].style.display = 'none';
+  }
 }
 
-// coloane
+
+/* ------------------------------------ coloane ----------------------------*/
+
 const popup = document.getElementById('add-popup');
 const closeAdd = document.getElementById('closeAdd');
 const addButton = document.querySelectorAll('.fa-plus');
@@ -109,9 +128,14 @@ function addTheNewColumn(title, element) {
   addFont.classList.add('fas', 'fa-plus');
   dotsFont.classList.add('fas', 'fa-ellipsis-h');
 
+  addFont.addEventListener('click', openPopup);
+
   nameColumn.innerHTML = title;
   addColumn.appendChild(addFont);
   editColumn.appendChild(dotsFont);
+
+  console.log(addFont);
+  console.log(dotsFont);
 
   header.appendChild(nameColumn);
   header.appendChild(editColumn);
@@ -125,7 +149,8 @@ function addTheNewColumn(title, element) {
 }
 
 
-// tichete
+/* -------------------------------------- tichete ---------------------------*/
+
 const popupTicket = document.getElementById('ticket-popup');
 const saveTicket = document.querySelector('#saveTicket');
 const closeTicket = document.getElementById('closeTicket');
@@ -185,7 +210,8 @@ function addTicket() {
   event.preventDefault();
 }
 
-// drag and drop
+
+/* -----------------------drag and drop--------------------------*/
 
 const contentColumn = document.querySelectorAll('.content-column');
 for (let i = 0; i < contentColumn.length; i++) {
@@ -221,4 +247,86 @@ function drop(ev) {
   const clickedTicket = document.getElementById('clickedTicket');
   ev.target.appendChild(document.getElementById(data));
   clickedTicket.removeAttribute('id');
+}
+
+
+/* -----------------------those 3 dots on the header--------------------------*/
+
+const popupEdit = document.getElementById('edit-name-popup');
+const closePopupEdit = document.getElementById('closeEditName');
+closePopupEdit.addEventListener('click', closePopupEditName);
+
+const saveNewName = document.getElementById('saveNewName');
+saveNewName.addEventListener('click', editColumnName);
+
+const dots = document.querySelectorAll('.edit-column');
+for (let i = 0; i < dots.length; i++) {
+  dots[i].addEventListener('click', openPopupDots);
+}
+
+const editName = document.querySelectorAll('.edit-name-column');
+for (let i = 0; i < editName.length; i++) {
+  editName[i].addEventListener('click', openPopupEditName);
+}
+
+/** Open the popup for the dots options
+ * @param {HTMLElement} event
+*/
+function openPopupDots(event) {
+  // console.log(event.target.closest('.header'));
+  const header = event.target.closest('.header');
+  const popup = header.querySelector('.popup-dots');
+  // console.log(popup);
+  popup.classList.toggle('show');
+}
+
+/**
+ *
+ * @param {*} event
+ */
+function openPopupEditName() {
+  const header = event.target.closest('.header');
+  header.querySelector('.name-column').setAttribute('id', 'columnNameChanged');
+  popupEdit.style.display = 'block';
+  event.preventDefault();
+}
+
+
+/**
+ *
+ * @param {*} event
+ */
+function editColumnName() {
+  popupEdit.style.display = 'none';
+  console.log('h');
+  event.preventDefault();
+  const name = document.getElementById('columnNewName').value;
+  const column = document.getElementById('columnNameChanged');
+  column.innerText = name;
+  column.removeAttribute('id');
+}
+
+
+/**
+ * The function for closing the popup for edit name column
+*/
+function closePopupEditName() {
+  popupEdit.style.display = 'none';
+}
+
+/* ---------------------------------------- delete column---------------------*/
+const columnToDelete = document.querySelectorAll('.delete-column');
+for (let i = 0; i < columnToDelete.length; i++) {
+  columnToDelete[i].addEventListener('click', deleteColumn);
+}
+
+/**
+ * function for deleting a column
+ * @param {HTMLElement} event
+ */
+function deleteColumn(event) {
+  const header = event.target.closest('.flex-column');
+  console.log(header);
+  const container = document.querySelector('.flex-container');
+  container.removeChild(header);
 }

@@ -105,6 +105,7 @@ button:hover {
     float: left;
     font-size: 10px;
     display: none;
+    position: relative;
 }
 
 .add-column{
@@ -148,6 +149,39 @@ button:hover {
 	display: none;
 	width: 400px;
     height: 200px;
+    position: absolute;
+    margin: auto;
+    background: white;
+    font-size: 13px;
+}
+
+.popup-dots {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: 0px;
+  }
+  
+  /* Toggle this class - hide and show the popup */
+.show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+#edit-name-popup{
+	border: 3px solid #ccf2ff;
+	display: none;
+	width: 400px;
+    height: 120px;
     position: absolute;
     margin: auto;
     background: white;
