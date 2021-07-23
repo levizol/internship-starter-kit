@@ -33,7 +33,8 @@ body {
     align-items: baseline;
     position: sticky;
     top: 0px;
-    z-index: 1;
+    background-color: #f4f5f7;
+    z-index: 5;
 }
 
 .editColumn {
@@ -69,6 +70,8 @@ body {
 
 .columnBody {
     padding: 0px 3px;
+    position: relative;
+    z-index: 2;
 }
 
 /* End column component */
@@ -105,7 +108,7 @@ body {
 #ticketWrapper {
     position: absolute;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     top: 0px;
     background-color: #172b4d87;
     display: none;
@@ -195,9 +198,10 @@ h2 {
     color: #172b4d;
 }
 
-.issueType{
+.issueType {
     height: 20px;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     color: #172b4d;
     font-size: 14px;
     font-weight: 400;
@@ -209,9 +213,10 @@ h2 {
     width: 150px;
 }
 
-#ticketInfo input{
+#ticketInfo input {
     height: 32px;
-    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     color: #172b4d;
     font-size: 14px;
     font-weight: 400;

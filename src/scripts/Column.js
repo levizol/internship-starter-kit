@@ -3,7 +3,7 @@ import Card from './Card';
 class Column {
 
     colName;
-    card;
+    cards = [];
     id;
 
     constructor(colName, id) {
@@ -11,16 +11,16 @@ class Column {
         this.id = id;
     }
 
-   set addCard(card) {
-        this.card = card;
-    }
-
     get getName() {
         return this.colName;
     }
 
-    get getId(){
+    get getId() {
         return this.id;
+    }
+
+    get cards() {
+        return this.cards;
     }
 
 }
