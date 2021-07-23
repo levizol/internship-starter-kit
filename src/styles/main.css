@@ -90,39 +90,39 @@ button:hover {
     flex-direction: column;
 }
 
-.header{
+.header {
     height: 35px;
 }
 
-.name-column{
+.name-column {
     color: black;
     font-size: 12px;
     padding: 10px;
     text-align: center;
 }
 
-.edit-column{
+.edit-column {
     float: left;
     font-size: 10px;
     display: none;
     position: relative;
 }
 
-.add-column{
+.add-column {
     font-size: 10px;
     float: right;
     display: none;
 }
 
-.to-do{
+.to-do {
     order: 0;
 }
 
-.done{
+.done {
     order: 1111;
 }
 
-#add-popup{
+#add-popup {
 	border: 3px solid #ccf2ff;
 	display: none;
 	width: 640px;
@@ -133,7 +133,7 @@ button:hover {
     font-size: 16px;
 }
 
-.chenar-ticket{
+.chenar-ticket {
     border: 3px solid rgb(255, 203, 203);
     margin: 10px;
     /* margin: 4px 4px 2px 2px; */
@@ -144,7 +144,7 @@ button:hover {
     height: 130px;
 }
 
-#ticket-popup{
+#ticket-popup {
 	border: 3px solid #ccf2ff;
 	display: none;
 	width: 400px;
@@ -177,7 +177,7 @@ button:hover {
     animation: fadeIn 1s;
   }
 
-#edit-name-popup{
+#edit-name-popup {
 	border: 3px solid #ccf2ff;
 	display: none;
 	width: 400px;
