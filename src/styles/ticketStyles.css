@@ -89,10 +89,11 @@
     margin-left: 50px;
     color:rgb(79, 79, 255);
 }
-.editTicketComments p {
-    flex-direction: column;
-    align-self: flex-start;
-    justify-self: flex-start;
+.editTicketComments  {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 80%;
 }
 .editTicketDetails {
     display: flex;

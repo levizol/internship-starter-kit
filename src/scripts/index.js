@@ -1,8 +1,9 @@
 import '../styles/main.css';
 import '../styles/ticketStyles.css';
+import '../styles/commentStyles.css';
 import Column from './Column';
 import Ticket from './Ticket';
-
+import TicketComment from './Comment';
 loadData();
 // refreshData();
 // eslint-disable-next-line require-jsdoc
@@ -118,6 +119,7 @@ function loadData() {
   setAllowDrop();
   setButtonListeners();
   setColumnActions();
+  // setCommentListeners();
 }
 /**
    * Function.
@@ -350,7 +352,6 @@ function showConfirmDeleteModal(event) {
   column.classList.toggle('crtColumn', true);
   document.querySelector('.board').style.opacity = '0.2';
   document.querySelector('#confirmDeleteColumnModal').style.display = 'block';
-  console.log(column);
 }
 /**
  * Function that hides the delete confirmation modal
@@ -499,13 +500,18 @@ function updateTicketData(ticket, ticketObj, column) {
  * @param {Ticket} ticketObj - the ticket data
  */
 function updateTicketComments(ticket, ticketObj) {
-  const commentList = ticket.querySelector('ul.userComments');
+  const commentList = ticket.querySelector('.userComments');
   commentList.innerHTML ='';
   for (let i=0; i < ticketObj.comments.length; i++) {
-    const li = document.createElement('li');
-    li.classList.add('comment');
-    li.innerText = ticketObj.comments[i];
-    commentList.appendChild(li);
+    const templateCom = document.querySelector('#Comment');
+    const comment = templateCom.content.cloneNode(true);
+    const commentID = comment.querySelector('.commentID');
+    const commentValue = comment.querySelector('.commentValue');
+    commentID.innerText = ticketObj.comments[i].id;
+    commentValue.innerText = ticketObj.comments[i].value;
+    const commentOptions = comment.querySelector('.deleteComment');
+    commentOptions.addEventListener('click', deleteComment);
+    commentList.appendChild(comment);
   }
 }
 /**
@@ -545,7 +551,8 @@ function addComment(event) {
   const ticketID = ticket.querySelector('.ticketID').innerText;
   const newCommentWrapper = event.target.closest('.newCommentWrapper');
   const newCommentInput = newCommentWrapper.querySelector('.newCommentInput');
-  const newComment = newCommentInput.value;
+  const newCommentValue = newCommentInput.value;
+  const newComment = new TicketComment(newCommentValue);
   const columns = JSON.parse(localStorage.getItem('columns'));
   const columnPos = findPosition(columnID);
   const posOfTicket =columns[columnPos]
@@ -554,6 +561,28 @@ function addComment(event) {
   updateTicketComments(ticket, columns[columnPos].tickets[posOfTicket]);
   localStorage.setItem('columns', JSON.stringify(columns));
   hideNewComment(event);
+}
+/**
+ * Function
+ * Deletes a comment
+ * @param {DocumentEvent} event
+ */
+function deleteComment(event) {
+  const comment = event.target.closest('.comment');
+  const ticket = comment.closest('.ticket');
+  const column = comment.closest('.col');
+  const ticketID = ticket.querySelector('.ticketID').innerText;
+  const columnID = column.querySelector('.columnID').innerText;
+  const commentID = comment.querySelector('.commentID').innerText;
+  const columnPos = findPosition(columnID);
+  const columns = JSON.parse(localStorage.getItem('columns'));
+  const posOfTicket =columns[columnPos]
+      .tickets.findIndex((el) => el.id === ticketID);
+  const posOfComment = columns[columnPos]
+      .tickets[posOfTicket].comments.findIndex((el) => el.id === commentID);
+  columns[columnPos].tickets[posOfTicket].comments.splice(posOfComment, 1);
+  updateTicketComments(ticket, columns[columnPos].tickets[posOfTicket]);
+  localStorage.setItem('columns', JSON.stringify(columns));
 }
 /**
    * Function.
@@ -606,7 +635,6 @@ function deleteTicket(event) {
  */
 function showNewComment(event) {
   const editTicketContent = event.target.closest('.editTicketContent');
-  console.log(editTicketContent);
   const newComment = editTicketContent.querySelector('.newCommentWrapper');
   newComment.style.display = 'flex';
   openDeleteTicket(event);
@@ -711,7 +739,6 @@ function showEditRemaining(event) {
  */
 function hideEditRemaining(event) {
   const remainingWrapper = event.target;
-  console.log(remainingWrapper);
   const editRemaining = remainingWrapper.querySelector('.editRemaining');
   const editTicketRemaining = remainingWrapper
       .querySelector('.editTicketRemaining');
@@ -811,6 +838,16 @@ function setAllowDrop() {
   for (let i = 0; i < contents.length; i++) {
     contents[i].addEventListener('dragover', allowDrop);
     contents[i].addEventListener('drop', drop);
+  }
+}
+/**
+ * Function
+ */
+function setCommentListeners() {
+  const commentOptions = document.
+      querySelectorAll('.commentOptions i.fa-times');
+  for (let i = 0; i < commentOptions.length; i++) {
+    commentOptions[i].addEventListener('click', deleteComment);
   }
 }
 /**
