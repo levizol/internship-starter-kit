@@ -67,27 +67,123 @@ button:hover {
     background-color: var(--button-hover-color)!important;
 }
 
-.logo {
-    margin: 20px;
+.flex-container {
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+    overflow: auto;
+}
+  
+.flex-column {
+    margin: 2px;
+    font-size: 30px;
+    width: 150px;
+    min-height: 500px;
 }
 
-.secondary-color {
-    color: var(--secondary-color);
+.content-column {
+    background-color: #f1f1f1;
+    text-align: center;
+    width: 150px;
+    display: flex;
+    min-height: 500px;
+    flex-direction: column;
 }
 
-.decoration {
-    animation: rotate 2000ms linear infinite;
+.header {
+    height: 35px;
 }
 
-.button, .button-cta {
-    transition: transform 500ms cubic-bezier(1, 0.01, 0.57, 1.35);
+.name-column {
+    color: black;
+    font-size: 12px;
+    padding: 10px;
+    text-align: center;
 }
 
-.active {
-    transform: translateY(50%);
+.edit-column {
+    float: left;
+    font-size: 10px;
+    display: none;
+    position: relative;
 }
 
-@keyframes rotate {
-    from {transform: rotate(0);}
-    to {transform: rotate(180deg);}
+.add-column {
+    font-size: 10px;
+    float: right;
+    display: none;
+}
+
+.to-do {
+    order: 0;
+}
+
+.done {
+    order: 1111;
+}
+
+#add-popup {
+	border: 3px solid #ccf2ff;
+	display: none;
+	width: 640px;
+    height: 150px;
+    position: absolute;
+    margin: auto;
+    background: white;
+    font-size: 16px;
+}
+
+.chenar-ticket {
+    border: 3px solid rgb(255, 203, 203);
+    margin: 10px;
+    /* margin: 4px 4px 2px 2px; */
+    background-color: #cbd9ff;
+    font-size: 12px;
+    text-align: left;
+    width: 120px;
+    height: 130px;
+}
+
+#ticket-popup {
+	border: 3px solid #ccf2ff;
+	display: none;
+	width: 400px;
+    height: 200px;
+    position: absolute;
+    margin: auto;
+    background: white;
+    font-size: 13px;
+}
+
+.popup-dots {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    top: 125%;
+    left: 50%;
+    margin-left: 0px;
+  }
+  
+  /* Toggle this class - hide and show the popup */
+.show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+  }
+
+#edit-name-popup {
+	border: 3px solid #ccf2ff;
+	display: none;
+	width: 400px;
+    height: 120px;
+    position: absolute;
+    margin: auto;
+    background: white;
+    font-size: 13px;
 }

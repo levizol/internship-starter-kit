@@ -1,7 +1,120 @@
 <main>
-    <img class="decoration" src="./images/decoration.png" alt="decoration">
-    <h2>Hello Awesome App!</h2>
-    <p>To get started edit a file in "./src" and save to reload.</p>
-    <button class="button-cta">Get Started!</button>
-    <button class="button">Find out more</button>
+    <div class="flex-container">
+        <div class="flex-column to-do" id="idTODO">
+            <div class="header">
+                <div class="name-column">TO DO</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                    </div>
+                </div> 
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="content-column" id="contentTODO"></div>
+        </div>
+        <div class="flex-column">
+            <div class="header">
+                <div class="name-column">IN PROGRESS</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                        <div class="delete-column">Delete column</div>
+                    </div>
+                </div> 
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>    
+            <div class="content-column"></div>
+        </div>
+        <div class="flex-column">
+            <div class="header">
+                <div class="name-column">REVIEW</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                        <div class="delete-column">Delete column</div>
+                    </div>
+                </div>
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>
+            <div class="content-column"></div>
+        </div> 
+        <div class="flex-column">
+            <div class="header">
+                <div class="name-column">IN TESTING</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                        <div class="delete-column">Delete column</div>
+                    </div>
+                </div>
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>    
+            <div class="content-column"></div>
+        </div>
+        <div class="flex-column">
+            <div class="header">
+                <div class="name-column">ACCEPTANCE PO</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                        <div class="delete-column">Delete column</div>
+                    </div>
+                </div> 
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>    
+            <div class="content-column"></div>
+        </div>  
+        <div class="flex-column done">
+            <div class="header">
+                <div class="name-column">DONE</div>
+                <div class="edit-column"><i class="fas fa-ellipsis-h"></i>
+                    <div class="popup-dots">
+                        <div class="edit-name-column">Edit column name</div>
+                    </div>
+                </div>
+                <div class="add-column"><i class="fas fa-plus"></i></div>
+            </div>    
+            <div class="content-column"></div>
+        </div>
+    </div>
+    <div id="add-popup" class="add  w3-display-middle">
+        <div class="add-content">
+          <span id="closeAdd" class="close"><i class="fa fa-times-circle"></i></span>  
+          <form>
+            <label for="name">Column name:</label>
+            <input type="text" id="columnName" placeholder="Column Name" min="3" required>
+            <br>
+            <button id="saveBtn">Add</button>
+            <button id="closeBtn">Close</button>
+          </form>
+         </div>
+    </div>
+    <div id="ticket-popup" class=" w3-display-middle">
+        <div class="ticket-content">
+          <span id="closeTicket"><i class="fa fa-times-circle"></i></span>  
+          <form>
+            <label for="ticketName">Ticket name:</label>
+            <input type="text" id="ticketName" placeholder="ticket Name" min="3" required><br>
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="name" min="3" required><br>
+            <label for="filetr">Label for filter:</label>
+            <input type="text" id="labelFilter" placeholder="label for filter" min="3" required><br>
+            <label for="name">Remaining:</label>
+            <input type="text" id="remaining" placeholder="remaining" min="3" required>
+            <br>
+            <button id="saveTicket">Add ticket</button>
+          </form>
+         </div>
+    </div>
+    <div id="edit-name-popup" class=" w3-display-middle">
+        <div class="edit-name-content">
+          <span id="closeEditName"><i class="fa fa-times-circle"></i></span>  
+          <form>
+            <label for="columnName">New name:</label>
+            <input type="text" id="columnNewName" placeholder="column new name" min="3" required><br>
+            <br>
+            <button id="saveNewName">Change name</button>
+          </form>
+         </div>
+    </div>
 </main>
