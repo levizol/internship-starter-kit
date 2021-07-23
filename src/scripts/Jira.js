@@ -615,7 +615,7 @@ function deleteColumn() {
 
 
 /**
- * 
+ *
  * @param {*} first -on which column to put event
  */
 function changeName(first = null) {
