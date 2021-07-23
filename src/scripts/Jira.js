@@ -596,6 +596,7 @@ function deleteColumn() {
 
   this.parentNode.parentNode.remove();
   let colnr = localStorage.getItem('colnr');
+  colnr = parseInt(colnr);
   for (let i=col+1; i<=colnr; i++) {
     const current = document.getElementById('col' + i);
     current.setAttribute('id', `col${i-1}`);
@@ -604,11 +605,18 @@ function deleteColumn() {
   for (let i=col; i<colnr; i++) {
     titles[i] = titles[i+1];
   }
+
+  for (let i=1; i<parents.length; i++) {
+    if (parents[i] > col) parents[i] = parents[i]-1;
+  }
+
   titles.pop();
   titles = JSON.stringify(titles);
   localStorage.setItem('titles', titles);
-
   colnr--;
+
+  parents = JSON.stringify(parents);
+  localStorage.setItem('parentofCards', parents);
   localStorage.setItem('colnr', colnr);
   location.reload();
 }
