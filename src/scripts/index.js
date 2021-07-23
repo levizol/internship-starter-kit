@@ -74,14 +74,10 @@ function createColumn(column) {
 function setTicketListeners(ticket) {
   const remainingWrapper = ticket
       .querySelector('.editTicketWrapper.remainingWrapper');
-  const ticketRemainingEdit = ticket.querySelector('.ticketRemainingEdit');
-  const pen = remainingWrapper.querySelector('.pen');
+  const ticketRemainingEdit = ticket.querySelector('.editRemaining');
   ticket.querySelector('.ticket').addEventListener('click', showTicketEdit);
   const closeTicket = ticket.querySelector('i.fa-times');
   closeTicket.addEventListener('click', hideTicketEdit);
-  pen.addEventListener('click', showInputButtons);
-  pen.addEventListener('mouseenter', showInputLabel);
-  pen.addEventListener('mouseleave', hideInputLabel);
   const xIcon = remainingWrapper.querySelector('.fa-times');
   xIcon.addEventListener('click', hideInputButtons);
   const confirmIcon = remainingWrapper.querySelector('.fa-check-square');
@@ -95,9 +91,12 @@ function setTicketListeners(ticket) {
   newComInput.addEventListener('input', checkNewCommentInput);
   deleteTicket.addEventListener('click', openDeleteTicket);
   confirmIcon.addEventListener('click', updateTicketRemaining);
-  ticketRemainingEdit.addEventListener('mouseenter', showInputLabel);
-  ticketRemainingEdit.addEventListener('mouseleave', hideInputLabel);
-  ticketRemainingEdit.addEventListener('click', showInputButtons);
+
+  const ticketRemainingWrapper = remainingWrapper
+      .querySelector('.ticketRemainingWrapper');
+  ticketRemainingWrapper.addEventListener('mouseenter', showInputLabel);
+  ticketRemainingWrapper.addEventListener('mouseleave', hideInputLabel);
+  ticketRemainingWrapper.addEventListener('click', showInputButtons);
   remainingWrapper.addEventListener('mouseenter', showEditRemaining);
   remainingWrapper.addEventListener('mouseleave', hideEditRemaining);
 }
@@ -515,7 +514,7 @@ function updateTicketComments(ticket, ticketObj) {
  */
 function updateTicketRemaining(event) {
   const editRemaining = event.target.closest('.editRemaining');
-  const newValue = editRemaining.querySelector('input.ticketRemainingEdit')
+  const newValue = editRemaining.querySelector('.ticketRemainingEdit')
       .value;
   const ticket = editRemaining.closest('.ticket');
   const ticketIDVal = ticket.querySelector('.ticketID').innerText;
@@ -531,8 +530,8 @@ function updateTicketRemaining(event) {
     }
   }
   localStorage.setItem('columns', JSON.stringify(columns));
+  editRemaining.style.display = 'none';
   hideInputButtons(event);
-  hideEditRemaining(event);
 }
 /**
  * Function
@@ -664,7 +663,7 @@ function showInputLabel(event) {
  * @param {DocumentEvent} event - the event that was triggered
  */
 function hideInputLabel(event) {
-  const editRemaining = event.target.parentElement;
+  const editRemaining = event.target.closest('.editRemaining');
   const remainingLabel = editRemaining.querySelector('.remainingLabel');
   remainingLabel.style.display = 'none';
 }
@@ -676,48 +675,48 @@ function showInputButtons(event) {
   hideInputLabel(event);
   const editRemaining = event.target.closest('.editRemaining');
   const inputButtons = editRemaining.querySelector('.inputButtons');
-  const pen = editRemaining.querySelector('.pen');
+  const pen = editRemaining.querySelector('.fa-pen');
   pen.style.display = 'none';
-  inputButtons.style.display = 'block';
+  inputButtons.classList.toggle('showInputButtons', true);
 }
 /**
  * Function that hides the input Buttons
  * @param {DocumentEvent} event - the event that was triggered
  */
 function hideInputButtons(event) {
+  const inputButtons = event.target.closest('.inputButtons');
   const editRemaining = event.target.closest('.editRemaining');
-  const inputButtons = editRemaining.querySelector('.inputButtons');
-  const pen = editRemaining.querySelector('.pen');
-  pen.style.display = 'flex';
-  inputButtons.style.display = 'none';
+  const pen = editRemaining.querySelector('.fa-pen');
+  pen.style.display = 'block';
+  inputButtons.classList.toggle('showInputButtons', false);
 }
 /**
  * Function that shows the edit remaining input
  * @param {DocumentEvent} event - the event that was triggered
  */
 function showEditRemaining(event) {
-  const editRemaining = event.target.querySelector('.editRemaining');
-  const editTicketRemaining= event.target.querySelector('.editTicketRemaining');
-  const ticketRemaining = event.target
-      .querySelector('.editTicketRemaining').innerText;
-  const inputRemaining = event.target.querySelector('.ticketRemainingEdit');
-  inputRemaining.value = ticketRemaining.replace(/[h]/g, '');
-  editRemaining.style.display = 'flex';
+  const remainingWrapper = event.target;
+  const editRemaining = remainingWrapper.querySelector('.editRemaining');
+  const editTicketRemaining = remainingWrapper
+      .querySelector('.editTicketRemaining');
+  const remainingValue = editTicketRemaining.innerText;
+  const inputRemaining = remainingWrapper.querySelector('.ticketRemainingEdit');
+  inputRemaining.value = remainingValue.replace(/[h]/g, '');
   editTicketRemaining.style.display = 'none';
+  editRemaining.style.display = 'flex';
 }
 /**
  * Function that hides the edit remaining input
  * @param {DocumentEvent} event - the event that was triggered
  */
 function hideEditRemaining(event) {
-  const editRemaining = event.target.querySelector('.editRemaining');
-  const editTicketRemaining= event.target.querySelector('.editTicketRemaining');
-  const inputRemaining = event.target.querySelector('.ticketRemainingEdit');
-  const pen = editRemaining.querySelector('.pen');
-  pen.style.display = 'flex';
-  inputRemaining.value = '';
+  const remainingWrapper = event.target;
+  console.log(remainingWrapper);
+  const editRemaining = remainingWrapper.querySelector('.editRemaining');
+  const editTicketRemaining = remainingWrapper
+      .querySelector('.editTicketRemaining');
+  editTicketRemaining.style.display = 'flex';
   editRemaining.style.display = 'none';
-  editTicketRemaining.style.display = 'block';
 }
 /**
    * Function.
