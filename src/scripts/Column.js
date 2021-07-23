@@ -11,7 +11,7 @@ class Column {
         this.id = id;
     }
 
-    addCard(card) {
+   set addCard(card) {
         this.card = card;
     }
 

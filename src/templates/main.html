@@ -5,7 +5,37 @@
         <button class="add">Add</button>
     </div>
 
+    <!-- Container for colunmns and tickets -->
     <div id="mainContainer"> </div>
+
+    <!-- Ticket creation container -->
+    <div id="ticketWrapper">
+        <div id="ticketInfoContainer">
+            <h2>Create issue</h2>
+            <div id="ticketInfo">
+                <div>
+                    <div>Issue Type</div>
+                    <div class="issueType">Bug</div>
+                </div>
+
+                <div class="ticketNumber">Issue 003</div>
+                <input class="ticketTitle" placeholder="Add a ticket description">
+                <div class="label">
+                    <div>Label</div>
+                    <div class="ticketFilter"><i>None</i></div>
+                </div>
+                <input class="ticketEstimatedTime" placeholder="Estimated time">
+            </div>
+
+            <div id="ticketInfoButtons">
+                <div class="createTicket">Create</div>
+                <div class="cancelTicket">Cancel</div>
+            </div>
+
+        </div>
+    </div>
+
+
 
     <!-- Column template -->
     <template id="tempColumn">
@@ -16,7 +46,6 @@
                     <div class="edit">...</div>
                     <div class="addColumn" data-column-id>+</div>
                 </div>
-
             </div>
 
             <div class="columnBody">
@@ -35,8 +64,8 @@
         <div class="cardContainer">
 
             <div class="issueInfo">
-                <div class="issueNumber">Issue number</div>
-                <div class="cardName">Iss 004</div>
+                <div class="issueNumber">Issue 004</div>
+                <div class="cardName">Ticket Title</div>
             </div>
 
             <div class="filter"><i>None</i></div>

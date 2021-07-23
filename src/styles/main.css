@@ -57,7 +57,7 @@ body {
     justify-content: flex-end;
 }
 
-.first:hover .editColumn{
+.first:hover .editColumn {
     width: unset;
 }
 
@@ -99,4 +99,125 @@ body {
 .addColumnBtn {
     display: none;
     z-index: 10;
+}
+
+/* Ticket info */
+#ticketWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    background-color: #172b4d87;
+    display: none;
+    z-index: 20;
+}
+#ticketInfoContainer {
+    position: relative;
+    width: 40%;
+    height: 600px;
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    background-color: #fff;
+    border-radius: 3px;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 35px;
+}
+
+#ticketInfo {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 70%;
+}
+
+#ticketInfoButtons {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.createTicket {
+    border: none;
+    margin-right: 4px;
+    height: 32px;
+    min-width: 24px;
+    border-radius: 3px;
+    text-shadow: none;
+    line-height: 32px;
+    padding: 0 10px;
+    color: #fff;
+    background: #0052cc;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.cancelTicket {
+    border: none;
+    margin-right: 4px;
+    height: 32px;
+    min-width: 24px;
+    border-radius: 3px;
+    text-shadow: none;
+    line-height: 32px;
+    padding: 0 10px;
+    color: #0052cc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.createTicket:hover {
+    background-color: #0065ff;
+}
+
+.cancelTicket:hover {
+    color: #0065ff;
+    text-decoration: underline;
+}
+
+.add {
+    cursor: pointer;
+}
+
+h2 {
+    width: 100%;
+    font-weight: normal;
+    font-size: 20px;
+    margin: 0;
+    color: #172b4d;
+}
+
+.issueType{
+    height: 20px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    color: #172b4d;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    background-color: #f4f5f7;
+    border: 1px solid #dfe1e6;
+    padding: 4px 7px 5px;
+    width: 150px;
+}
+
+#ticketInfo input{
+    height: 32px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
+    color: #172b4d;
+    font-size: 14px;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 20px;
+    background-color: #f4f5f7;
+    border: 1px solid #dfe1e6;
+    padding: 4px 7px 5px;
 }

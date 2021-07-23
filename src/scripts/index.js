@@ -1,67 +1,17 @@
 import '../styles/main.css';
 import Card from './Card';
 import Column from './Column';
-import Button from './Button';
 import { v4 as uuidv4 } from 'uuid';
-
-
-
-// import CallToAction from './CallToAction';
-
-// const button = new Button(document.querySelector('.button'));
-// const cta = new CallToAction(document.querySelector('.button-cta'));
-
-// button.registerEvents();
-// cta.registerEvents();
-// cta.changeBgColor();
 
 
 let columnObj = [new Column("To Do", uuidv4()), new Column("Done", uuidv4())];
 
 columnObj = JSON.parse(localStorage.getItem('Columns'));
 
-console.log(columnObj);
-
 loadColumns();
 
-// Add new column
-document.addEventListener('click', (event) => {
 
-    if (event.toElement.className === 'addColumn') {
-
-        let columnName = document.querySelector('.addColumnBtn');
-        let rect = event.target.getBoundingClientRect();
-
-        columnName.style.display = 'block';
-        columnName.style.position = 'absolute';
-        columnName.style.top = rect.top + 'px';
-        columnName.style.left = (rect.left + 20) + 'px';
-
-        let columnID = event.target.getAttribute('data-column-id');
-
-        console.log(columnID);
-
-        document.querySelector('.add').addEventListener('click', function () {
-
-            let columnName = document.querySelector('.colName');
-
-            // Push the new column in the columns array 
-            columnObj.splice((+columnID + 1), 0, new Column(columnName.value, uuidv4()));
-
-            console.log(columnObj);
-
-            columnName.value = '';
-            document.querySelector('.addColumnBtn').style.display = 'none';
-
-            document.querySelector("#mainContainer").innerHTML = '';
-
-            loadColumns();
-
-        }, { once: true });
-    }
-});
-
-
+// Load all columns
 function loadColumns() {
 
     for (let [index, column] of columnObj.entries()) {
@@ -69,8 +19,6 @@ function loadColumns() {
         let tempColumn = document.querySelector("#tempColumn");
 
         let copyColumn = document.importNode(tempColumn.content, true);
-
-        console.log(column);
 
         copyColumn.querySelector('.columnTitle').innerText = column.colName;
 
@@ -96,3 +44,76 @@ function loadColumns() {
     localStorage.setItem('Columns', JSON.stringify(columnObj));
 
 }
+
+
+
+
+// Add new column
+document.addEventListener('click', (event) => {
+
+    if (event.toElement.className === 'addColumn') {
+
+        let columnName = document.querySelector('.addColumnBtn');
+        let rect = event.target.getBoundingClientRect();
+
+        columnName.style.display = 'block';
+        columnName.style.position = 'absolute';
+        columnName.style.top = rect.top + 'px';
+        columnName.style.left = (rect.left + 20) + 'px';
+
+        let columnID = event.target.getAttribute('data-column-id');
+
+        document.querySelector('.add').addEventListener('click', () => {
+
+            let columnName = document.querySelector('.colName');
+
+            // Push the new column in the columns array 
+            columnObj.splice((+columnID + 1), 0, new Column(columnName.value, uuidv4()));
+
+            console.log(columnObj);
+
+            columnName.value = '';
+            document.querySelector('.addColumnBtn').style.display = 'none';
+
+            document.querySelector("#mainContainer").innerHTML = '';
+
+            loadColumns();
+
+        }, { once: true });
+    }
+});
+
+
+// Open Ticket
+document.querySelectorAll('.column')[0].addEventListener('dblclick', () => {
+    document.querySelector("#ticketWrapper").style.display = 'block';
+});
+
+// Create ticket
+document.querySelector('.createTicket').addEventListener('click', () => {
+    document.querySelector('#ticketWrapper').style.display = 'none';
+
+    let ticketNumber = document.querySelector('.ticketNumber');
+
+    let tempCard = document.querySelector("#tempCard");
+
+    let copyCard = document.importNode(tempCard.content, true);
+
+    copyCard.querySelector('.issueNumber').innerText = ticketNumber.innerText;
+
+    console.log(columnObj);
+
+    console.log(new Card('1', 'Description', 'None', '3h'));
+
+    columnObj[0].addCard = new Card('1', 'Description', 'None', '3h');
+
+    document.querySelectorAll('.columnBody')[0].appendChild(copyCard);
+
+    loadColumns();
+
+})
+
+// Cancel ticket
+document.querySelector('.cancelTicket').addEventListener('click', () => {
+    document.querySelector('#ticketWrapper').style.display = 'none';
+})
