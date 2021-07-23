@@ -1,9 +1,9 @@
 <template id="ticket">
     <div draggable="true" class="ticket">
         <p class="ticketID"></p>
-        <p class="ticketNr">None</p>
-        <b><p class="ticketTitle">None</p></b>
-        <p class="ticketLabel">None</p>
+        <p class="ticketNr"></p>
+        <b><p class="ticketTitle"></p></b>
+        <p class="ticketLabel"></p>
         <div class="editTicket">
             <div class="editTicketContent">
                 <div class="editTicketHeader">
@@ -15,6 +15,7 @@
                             <i class="fas fa-ellipsis-h"></i>
                             <div class="deleteTicketOption">
                                 <span class="deleteTicket">Delete ticket</span>
+                                <span class="addCommentTicket">Add comment</span>
                             </div>
                         </div>
                         <i class="fas fa-times"></i>
@@ -58,11 +59,31 @@
                     <p>Label:</p>
                     <p class="editTicketLabel"></p>
                 </div>
+                <div class="editTicketWrapper">
+                    <p>User comments:</p>
+                    
+                </div>
+                <div class="editTicketComments">
+                    <ul class="userComments">
+                      
+                    </ul>
+                </div>
+                <div class="editTicketWrapper newCommentWrapper">
+                    <label for="newCommentInput">New comment:</label>
+                    <input class="newCommentInput">
+                    <div class="newCommentButtons">
+                        <i class="fas fa-check-square"></i>
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
             </div>
             
         </div>
         <div class="ticketRemaining">
             
+        </div>
+        <div class="ticketSign">
+           
         </div>
     </div>
 </template>

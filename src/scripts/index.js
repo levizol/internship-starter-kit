@@ -1,24 +1,18 @@
 import '../styles/main.css';
+import '../styles/ticketStyles.css';
 import Column from './Column';
 import Ticket from './Ticket';
-// import Column from './Column';
-const board = document.querySelector('.board');
+
 loadData();
 // refreshData();
-
-const content = document.querySelector('.toDoColumn .content');
-
-const headers = document.querySelectorAll('.columnHeader');
-
-// eslint-disable-next-line no-unused-vars
 // eslint-disable-next-line require-jsdoc
 function refreshData() {
   localStorage.clear();
   const toDoColumn = new Column('To do', 'todo');
   const normalColumn = new Column('Tasks', '');
   const doneColumn = new Column('Done', 'done');
-  // const ticket1 =
-  // new Ticket('ISA-293', 'Finish Board', 'Integrate Storage', '5');
+  const ticket1 =
+  new Ticket('ISA-293', 'Finish Board', 'Integrate Storage', '5');
   toDoColumn.addTicket(ticket1);
   const columns = [];
   columns.push(toDoColumn);
@@ -39,6 +33,7 @@ function createTicket(ticket, column) {
   const newTicket = template.content.cloneNode(true);
   updateTicketData(newTicket, ticket, column);
   const crtStatusColor = newTicket.querySelector('.editTicketStatusColor');
+  updateTicketComments(newTicket, ticket);
   const blueColor = 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)';
   if (!column.querySelector('div').classList.contains('doneColumn') &&
   !column.querySelector('div').classList.contains('toDoColumn')) {
@@ -77,7 +72,6 @@ function createColumn(column) {
  * @param {HTMLElement} ticket - the ticket
  */
 function setTicketListeners(ticket) {
-  console.log(ticket.querySelector('.ticket'));
   const remainingWrapper = ticket
       .querySelector('.editTicketWrapper.remainingWrapper');
   const ticketRemainingEdit = ticket.querySelector('.ticketRemainingEdit');
@@ -91,6 +85,15 @@ function setTicketListeners(ticket) {
   const xIcon = remainingWrapper.querySelector('.fa-times');
   xIcon.addEventListener('click', hideInputButtons);
   const confirmIcon = remainingWrapper.querySelector('.fa-check-square');
+  const deleteTicket = ticket.querySelector('.deleteTicketButton i');
+  const newCommentWrapper = ticket.querySelector('.newCommentWrapper');
+  const xNewComment = newCommentWrapper.querySelector('i.fa-times');
+  const confirmNewCom = newCommentWrapper.querySelector('i.fa-check-square');
+  const newComInput = newCommentWrapper.querySelector('.newCommentInput');
+  confirmNewCom.addEventListener('click', addComment);
+  xNewComment.addEventListener('click', hideNewComment);
+  newComInput.addEventListener('input', checkNewCommentInput);
+  deleteTicket.addEventListener('click', openDeleteTicket);
   confirmIcon.addEventListener('click', updateTicketRemaining);
   ticketRemainingEdit.addEventListener('mouseenter', showInputLabel);
   ticketRemainingEdit.addEventListener('mouseleave', hideInputLabel);
@@ -103,10 +106,19 @@ function setTicketListeners(ticket) {
    * Loads the columns fromt the localStorage.
    */
 function loadData() {
+  const board = document.querySelector('.board');
   const columns = JSON.parse(localStorage.getItem('columns'));
   for (let i = 0; i <columns.length; i++) {
     board.appendChild(createColumn(columns[i]));
   }
+  const content = document.querySelector('.toDoColumn .content');
+  content.addEventListener('dblclick', showTicketModal);
+  setIcons();
+  setOnDragStart();
+  setSpanListeners();
+  setAllowDrop();
+  setButtonListeners();
+  setColumnActions();
 }
 /**
    * Function.
@@ -125,6 +137,21 @@ function findPosition(columnID) {
   return -1;
 }
 /**
+ * Function
+ * Returns the position of the ticket with the id
+ * in the localStorage
+ * @param {string} ticketID - the ticket ID
+ * @param {number} columnPos - the column position in local storage
+ * @return {number} position - the position of the ticket
+ */
+function findPositionTicket(ticketID, columnPos) {
+  const columns = JSON.parse(localStorage.getItem('columns'));
+  const position = columns[columnPos].tickets.findIndex((el)=> {
+    el.id === ticketID;
+  });
+  return position;
+}
+/**
    * Function.
    * Adds a column to the page.
    */
@@ -137,8 +164,7 @@ function addColumn() {
   const newColumnHeader = newColumn.querySelector('.columnHeader');
   const title = newColumnHeader.querySelector('.title');
   title.innerText = document.querySelector('#columnName').value;
-  newColumnHeader.addEventListener('mouseenter', seeColumnActions);
-  newColumnHeader.addEventListener('mouseleave', hideColumnActions);
+  setHeaderListeners(newColumnHeader);
   const icon = newColumn.querySelector('.fas.fa-plus-circle');
   icon.addEventListener('click', showModal);
   const content = newColumn.querySelector('.content');
@@ -159,17 +185,16 @@ function addColumn() {
 /**
    * Function.
    * Deletes a column from the page.
-   * @param {DocumentEvent} event - the event
    */
-function deleteColumn(event) {
-  const spanDelete = event.target;
-  const column = spanDelete.closest('.column');
+function deleteColumn() {
+  const column = document.querySelector('.crtColumn');
   const columnID = column.querySelector('p.columnID').innerText;
   const columns = JSON.parse(localStorage.getItem('columns'));
   columns.splice(findPosition(columnID), 1);
   localStorage.setItem('columns', JSON.stringify(columns));
   const board = document.querySelector('.board');
   board.removeChild(column);
+  hideConfirmDeleteModal();
 }
 // eslint-disable-next-line require-jsdoc
 function calcEstimate(remaining) {
@@ -179,29 +204,17 @@ function calcEstimate(remaining) {
   return estimate;
 }
 /**
- * Function that updates a ticket's remaining time
- * @param {DocumentEvent} event - the event that was triggered
- */
-function updateTicketRemaining(event) {
-  const editRemaining = event.target.closest('.editRemaining');
-  const newValue = editRemaining.querySelector('input.ticketRemainingEdit')
-      .value;
-  const ticket = editRemaining.closest('.ticket');
-  const ticketIDVal = ticket.querySelector('.ticketID').innerText;
-  const column = editRemaining.closest('.col');
-  const columnID = column.querySelector('.columnID').innerText;
+   * Function.
+   * Set updates the number of tasks for each column header.
+   * @param {HTMLElement} column - the column that needs updating
+   */
+function updateHeaders(column) {
   const columns = JSON.parse(localStorage.getItem('columns'));
-  const posColumn = findPosition(columnID);
-  for (let i=0; i<columns[posColumn].tickets.length; i++) {
-    if (columns[posColumn].tickets[i].id === ticketIDVal) {
-      columns[posColumn].tickets[i].remaining = newValue;
-      columns[posColumn].tickets[i].estimate =calcEstimate(newValue);
-      updateTicketData(ticket, columns[posColumn].tickets[i], column);
-    }
-  }
-  localStorage.setItem('columns', JSON.stringify(columns));
-  hideInputButtons(event);
-  hideEditRemaining(event);
+  const columnID = column.querySelector('.columnID').innerText;
+  const columnPos = findPosition(columnID);
+  const columnTitle = column.querySelector('.title');
+  const title = columns[columnPos].title.replace(/[0-9]/g, '');
+  columnTitle.innerText = title + ' ' + columns[columnPos].tickets.length;
 }
 /**
    * Function.
@@ -249,12 +262,14 @@ function hideColumnActions(event) {
   title.style.display = 'flex';
   actions.style.display = 'none';
 }
+
+
+// MODAL FUNCTIONS
 /**
    * Function.
    * shows the modal.
-   * @param {DocumentEvent} event - the event that triggered the modal
    */
-function showTicketModal(event) {
+function showTicketModal() {
   document.querySelector('.board').style.opacity = '0.2';
   document.querySelector('#addTicketModal').style.display = 'block';
 }
@@ -328,14 +343,43 @@ function hideModal() {
   document.querySelector('.board').style.opacity = '1';
 }
 /**
+ * Function that shows the delete confirmation modal
+ * @param {DocumentEvent} event - the event that was triggered
+ */
+function showConfirmDeleteModal(event) {
+  const column = event.target.closest('.col');
+  column.classList.toggle('crtColumn', true);
+  document.querySelector('.board').style.opacity = '0.2';
+  document.querySelector('#confirmDeleteColumnModal').style.display = 'block';
+  console.log(column);
+}
+/**
+ * Function that hides the delete confirmation modal
+ */
+function hideConfirmDeleteModal() {
+  document.querySelector('.board').style.opacity = '1';
+  document.querySelector('#confirmDeleteColumnModal').style.display = 'none';
+}
+// END OF MODAL FUNCTIONS
+
+
+/**
    * Function.
    * Sets the mouseover and mouseleave for each header.
    */
 function setColumnActions() {
+  const headers = document.querySelectorAll('.columnHeader');
   for (let i = 0; i < headers.length; i++) {
-    headers[i].addEventListener('mouseenter', seeColumnActions);
-    headers[i].addEventListener('mouseleave', hideColumnActions);
+    setHeaderListeners(headers[i]);
   }
+}
+/**
+ * Function that sets the mouseenter and mouseleave event listeners
+ * @param {HTMLElement} header -the header
+ */
+function setHeaderListeners(header) {
+  header.addEventListener('mouseenter', seeColumnActions);
+  header.addEventListener('mouseleave', hideColumnActions);
 }
 /**
    * Function.
@@ -353,8 +397,8 @@ function openPopUp(event) {
    * @param {DocumentEvent} event - the event that was triggered
    */
 function openDeleteTicket(event) {
-  const deleteTicket = event.target.
-      parentElement.querySelector('.deleteTicketOption');
+  const deleteTicketButton = event.target.closest('.deleteTicketButton');
+  const deleteTicket = deleteTicketButton.querySelector('.deleteTicketOption');
   deleteTicket.classList.toggle('deleteTicketShow');
 }
 /**
@@ -386,6 +430,8 @@ function setButtonListeners() {
   const cancelTicketButton = document.querySelector('#cancelTicketButton');
   const cancelEditColumnButton = document.querySelector('#cancelUpdateColumn');
   const updateColumnButton = document.querySelector('#saveUpdateColumn');
+  const cancelConfirmButton = document.querySelector('#cancelDeleteColumn');
+  const confirmDeleteButton = document.querySelector('#confirmDeleteColumn');
   addButton.addEventListener('input', checkInput);
   cancelButton.addEventListener('click', hideModal);
   addButton.addEventListener('click', addColumn);
@@ -393,19 +439,8 @@ function setButtonListeners() {
   addTicketButton.addEventListener('click', addTicket);
   cancelEditColumnButton.addEventListener('click', hideEditColumnModal);
   updateColumnButton.addEventListener('click', updateColumn);
-}
-/**
-   * Function.
-   * Set updates the number of tasks for each column header.
-   * @param {HTMLElement} column - the column that needs updating
-   */
-function updateHeaders(column) {
-  const columns = JSON.parse(localStorage.getItem('columns'));
-  const columnID = column.querySelector('.columnID').innerText;
-  const columnPos = findPosition(columnID);
-  const columnTitle = column.querySelector('.title');
-  const title = columns[columnPos].title.replace(/[0-9]/g, '');
-  columnTitle.innerText = title + ' ' + columns[columnPos].tickets.length;
+  cancelConfirmButton.addEventListener('click', hideConfirmDeleteModal);
+  confirmDeleteButton.addEventListener('click', deleteColumn);
 }
 /**
    * Function.
@@ -414,7 +449,7 @@ function updateHeaders(column) {
 function setSpanListeners() {
   const deleteSpans = document.querySelectorAll('span.deleteColumn');
   for (let i = 0; i < deleteSpans.length; i++) {
-    deleteSpans[i].addEventListener('click', deleteColumn);
+    deleteSpans[i].addEventListener('click', showConfirmDeleteModal);
   }
   const updateColumnSpans = document.querySelectorAll('span.updateColumn');
   for (let i = 0; i < updateColumnSpans.length; i++) {
@@ -425,7 +460,12 @@ function setSpanListeners() {
   for (let i = 0; i < deleteTickets.length; i++) {
     deleteTickets[i].addEventListener('click', deleteTicket);
   }
+  const newComment = document.querySelectorAll('.addCommentTicket');
+  for (let i = 0; i < deleteTickets.length; i++) {
+    newComment[i].addEventListener('click', showNewComment);
+  }
 }
+// TICKET FUNCTIONS
 /**
    * Function.
    * Updates the ticket data.
@@ -447,29 +487,94 @@ function updateTicketData(ticket, ticketObj, column) {
   const ticketRemaining = ticketObj.remaining + 'h';
   ticket.querySelector('.editTicketRemaining').innerText = ticketRemaining;
   ticket.querySelector('.ticketRemaining').innerText = ticketRemaining;
+  const numberInitial = ticketObj.number.substr(0, 1).toUpperCase();
+  const titleInitial = ticketObj.title.substr(0, 1).toUpperCase();
+  const labelInitial = ticketObj.label.substr(0, 1).toUpperCase();
+  const signValue = (numberInitial + titleInitial + labelInitial).bold();
+  ticket.querySelector('.ticketSign').innerHTML = signValue;
+}
+/**
+ * Function
+ * Updates the ticket comments
+ * @param {HTMLElement} ticket - the ticket that need updating
+ * @param {Ticket} ticketObj - the ticket data
+ */
+function updateTicketComments(ticket, ticketObj) {
+  const commentList = ticket.querySelector('ul.userComments');
+  commentList.innerHTML ='';
+  for (let i=0; i < ticketObj.comments.length; i++) {
+    const li = document.createElement('li');
+    li.classList.add('comment');
+    li.innerText = ticketObj.comments[i];
+    commentList.appendChild(li);
+  }
+}
+/**
+ * Function that updates a ticket's remaining time
+ * @param {DocumentEvent} event - the event that was triggered
+ */
+function updateTicketRemaining(event) {
+  const editRemaining = event.target.closest('.editRemaining');
+  const newValue = editRemaining.querySelector('input.ticketRemainingEdit')
+      .value;
+  const ticket = editRemaining.closest('.ticket');
+  const ticketIDVal = ticket.querySelector('.ticketID').innerText;
+  const column = editRemaining.closest('.col');
+  const columnID = column.querySelector('.columnID').innerText;
+  const columns = JSON.parse(localStorage.getItem('columns'));
+  const posColumn = findPosition(columnID);
+  for (let i=0; i<columns[posColumn].tickets.length; i++) {
+    if (columns[posColumn].tickets[i].id === ticketIDVal) {
+      columns[posColumn].tickets[i].remaining = newValue;
+      columns[posColumn].tickets[i].estimate = calcEstimate(newValue);
+      updateTicketData(ticket, columns[posColumn].tickets[i], column);
+    }
+  }
+  localStorage.setItem('columns', JSON.stringify(columns));
+  hideInputButtons(event);
+  hideEditRemaining(event);
+}
+/**
+ * Function
+ * Adds a new comment
+ * @param {DocumentEvent} event - the event that was triggered
+ */
+function addComment(event) {
+  const ticket = event.target.closest('.ticket');
+  const column = event.target.closest('.col');
+  const columnID = column.querySelector('.columnID').innerText;
+  const ticketID = ticket.querySelector('.ticketID').innerText;
+  const newCommentWrapper = event.target.closest('.newCommentWrapper');
+  const newCommentInput = newCommentWrapper.querySelector('.newCommentInput');
+  const newComment = newCommentInput.value;
+  const columns = JSON.parse(localStorage.getItem('columns'));
+  const columnPos = findPosition(columnID);
+  const posOfTicket =columns[columnPos]
+      .tickets.findIndex((el) => el.id === ticketID);
+  columns[columnPos].tickets[posOfTicket].comments.push(newComment);
+  updateTicketComments(ticket, columns[columnPos].tickets[posOfTicket]);
+  localStorage.setItem('columns', JSON.stringify(columns));
+  hideNewComment(event);
 }
 /**
    * Function.
    * Creates a ticket.
    */
 function addTicket() {
-  const template = document.querySelector('#ticket');
-  const ticket = template.content.cloneNode(true);
   const ticketNr = document.querySelector('#ticketNumber').value;
   const ticketName = document.querySelector('#ticketName').value;
   const ticketLabel = document.querySelector('#ticketLabel').value;
   const newTicket = new Ticket(ticketNr, ticketName, ticketLabel, '0');
-  const ticketID = ticket.querySelector('.ticketID');
-  const column = content.closest('.col');
+  const toDoContent = document.querySelector('.toDoColumn .content');
+  const column = toDoContent.closest('.col');
+  const ticket = createTicket(newTicket, column);
   updateTicketData(ticket, newTicket, column);
-  const deleteTicket = ticket.querySelector('.deleteTicketButton i');
-  deleteTicket.addEventListener('click', openDeleteTicket);
-  ticketID.innerText = newTicket.id;
+  updateTicketComments(ticket, newTicket);
   const columns = JSON.parse(localStorage.getItem('columns'));
   columns[0].tickets.push(newTicket);
   setTicketListeners(ticket);
   localStorage.setItem('columns', JSON.stringify(columns));
-  content.appendChild(ticket);
+  toDoContent.appendChild(ticket);
   updateHeaders(column);
   setOnDragStart();
   setSpanListeners();
@@ -496,6 +601,30 @@ function deleteTicket(event) {
   updateHeaders(column);
 }
 /**
+ * Function
+ * Shows the new comment input
+ * @param {DocumentEvent} event - the event that was triggered
+ */
+function showNewComment(event) {
+  const editTicketContent = event.target.closest('.editTicketContent');
+  console.log(editTicketContent);
+  const newComment = editTicketContent.querySelector('.newCommentWrapper');
+  newComment.style.display = 'flex';
+  openDeleteTicket(event);
+}
+/**
+ * Function
+ * Hides the new comment input
+ *  @param {DocumentEvent} event - the event that was triggered
+ */
+function hideNewComment(event) {
+  const editTicketContent = event.target.closest('.editTicketContent');
+  const newComment = editTicketContent.querySelector('.newCommentWrapper');
+  const newCommentInput = newComment.querySelector('.newCommentInput');
+  newCommentInput.value = '';
+  newComment.style.display = 'none';
+}
+/**
    * Function.
    * Shows the ticket edit div.
    * @param {DocumentEvent} event - the event that was triggered
@@ -519,13 +648,14 @@ function hideTicketEdit(event) {
   ticketEdit.classList.toggle('editTicketShow', false);
   const inputButtons = ticketEdit.querySelector('.inputButtons');
   inputButtons.style.display = 'none';
+  hideNewComment(event);
 }
 /**
  * Function that show the label for the edit remaining input
  * @param {DocumentEvent} event - the event that was triggered
  */
 function showInputLabel(event) {
-  const editRemaining = event.target.parentElement;
+  const editRemaining = event.target.closest('.editRemaining');
   const remainingLabel = editRemaining.querySelector('.remainingLabel');
   remainingLabel.style.display = 'block';
 }
@@ -694,15 +824,18 @@ function removeCrtColumn() {
     crtColumn.classList.toggle('crtColumn', false);
   }
 }
-
-
-content.addEventListener('dblclick', showTicketModal);
-cancelButton.addEventListener('click', hideModal);
-addButton.addEventListener('click', addColumn);
-
-setIcons();
-setOnDragStart();
-setSpanListeners();
-setAllowDrop();
-setButtonListeners();
-setColumnActions();
+/**
+ * Function
+ * Checks the input for the new comment input
+ * @param {DocumentEvent} event
+ */
+function checkNewCommentInput(event) {
+  const input = event.target;
+  const newCommentWrapper = input.closest('.newCommentWrapper');
+  const confirmIcon = newCommentWrapper.querySelector('i.fa-check-square');
+  if (input.value !== '') {
+    confirmIcon.style.visibility = 'visible';
+  } else {
+    confirmIcon.style.visibility = 'hidden';
+  }
+}
