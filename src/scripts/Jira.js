@@ -1,6 +1,15 @@
-/* eslint-disable max-len *//* eslint-disable require-jsdoc *//* eslint-disable no-unused-vars *//* eslint-disable no-invalid-this *//* eslint-disable linebreak-style */
-
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-invalid-this */
+/**
+ * Ticket class
+ */
 class Card {
+  /**
+   *
+   * @param {*} title - title of ticket
+   * @param {*} remaining -remaining work for the ticket
+   * @param {*} number - number of the ticket
+   */
   constructor(title, remaining, number) {
     this.title = title;
     this.estimated = remaining;
@@ -142,11 +151,12 @@ function insertAfter(referenceNode, newNode) {
  * insert a column to the right
  */
 function addColumn() {
+  const where = this.parentElement.parentElement;
   let colnr = parseInt( localStorage.getItem('colnr') );
   colnr = colnr+1;
   localStorage.setItem('colnr', colnr);
 
-  where = this.parentElement.parentElement;
+
   const newNode = document.createElement('div');
   newNode.setAttribute('class', 'column');
 
@@ -337,7 +347,7 @@ function addColumnatFirst() {
   dataNode.classList.toggle('data');
   dataNode.setAttribute('ondrop', 'drop(event)');
   dataNode.setAttribute('ondragover', 'allowDrop(event)');
-  /** ondrop="drop(event)" ondragover="allowDrop(event)"*/
+
 
   newNode.appendChild(containerNode);
   newNode.appendChild(dataNode);
@@ -359,9 +369,9 @@ function addColumnatFirst() {
 }
 
 
-/*
- * hide an element
-*/
+/**
+ * hides an element
+ */
 function hide() {
   this.classList.toggle('hide');
 }
@@ -462,20 +472,11 @@ document.addEventListener(
           saveCard();
         }
       }
-
-      /* if (!document.querySelector('.changeColName').classList.contains('hide')) {
-        if (!event.target.matches('.changeColName') &&
-        !event.target.matches('.colName') &&
-        !event.target.matches('.saveCol')) {
-          document.querySelector('.changeColName').classList.toggle('hide');
-        }
-      }*/
     },
 );
 
-
-/* eslint-disable linebreak-style */
-/** *
+/**
+ * Adds a new card when clikced on save
  *
  */
 function saveCard() {
@@ -627,20 +628,6 @@ function deleteColumn() {
  * @param {*} first -on which column to put event
  */
 function changeName(first = null) {
-  /* const name = prompt('Please enter the new column name');
-
-  if (name != null) {
-    this.innerHTML = name;
-    let colid = this.parentElement.parentElement.getAttribute('id');
-    colid = colid.substring(3, colid.length);
-    colid = parseInt(colid);
-
-    let titles = localStorage.getItem('titles');
-    titles = JSON.parse(titles);
-    titles[colid] = name;
-    titles = JSON.stringify(titles);
-    localStorage.setItem('titles', titles);
-  }*/
   try {
     lastColumn = this.parentElement.parentElement.getAttribute('id');
     lastColumn = lastColumn.substring(3, lastColumn.length);
@@ -652,6 +639,9 @@ function changeName(first = null) {
   }
 }
 
+/**
+ * Saves the column new name
+ */
 function saveCol() {
   const name = document.querySelector('.colName').value;
   if (document.querySelector('.error2').classList.contains('hide')) {
@@ -664,7 +654,8 @@ function saveCol() {
       document.querySelector('.error2').classList.toggle('hide');
     }
     const colid = lastColumn;
-    document.querySelector('#col'+colid).querySelector('.name').innerHTML = name;
+    document.querySelector('#col'+colid)
+        .querySelector('.name').innerHTML = name;
 
     let titles = localStorage.getItem('titles');
     titles = JSON.parse(titles);
@@ -676,14 +667,16 @@ function saveCol() {
   document.querySelector('.colName').value='';
 }
 /**
- *
+ *Shiws or hides details of cards
  */
 function detdet() {
   document.querySelector('.information .add')
       .classList.toggle('hide');
 }
 
-
+/**
+ * updates nr of tickets in every column
+ */
 function updateNr() {
   let cards = localStorage.getItem('cardDetails');
   cards = JSON.parse(cards);
@@ -699,4 +692,3 @@ function updateNr() {
     document.querySelector('#col' + i + ' .nr').innerHTML = nr;
   }
 }
-

@@ -3,9 +3,9 @@
    
 
     Check out the Jira board!
-    <div class = 'col-container-flex'>
+    <div class='col-container-flex'>
         
-        <div class = 'column' id='col1'>
+        <div class='column' id='col1'>
             <div class = 'col-container-flex'>
                 <div class='label addition'><i class="far fa-plus-square"></i></div>
                 <div class='label delete'><i class="far fa-minus-square"></i></div>
@@ -21,13 +21,13 @@
         
      
         
-        <div class = 'column' id='col2'>
+        <div class ='column' id='col2'>
             <div class = 'col-container-flex'>
                 <div class='label addition'> </i></div>
                 <div class='label'>DONE</div>
                 <div class='nr'>0</div>
             </div>
-            <div class= 'data' ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class='data' ondrop="drop(event)" ondragover="allowDrop(event)">
                 
             </div>
         </div>
@@ -36,14 +36,14 @@
     
     <div class='popup hide'>
         <div class='row'>
-            <div class = 'col-sm-3'>
+            <div class='col-sm-3'>
                 <div class='save'>
                     <button id='addcard'>Save</button>
                     
                 </div> 
                     
             </div>
-            <div class = 'col-sm-8 '>
+            <div class='col-sm-8 '>
                 
                 <div class='input'>
                     
@@ -76,21 +76,21 @@
 
             </div>
 
-            <div class = 'col-sm-1 close' >
+            <div class='col-sm-1 close' >
                 <i class="far fa-window-close"></i>
             </div>
         </div>
     </div>
        
-    <div class = 'information hide'>
+    <div class='information hide'>
           
-                <div class = 'title'>
+                <div class='title'>
                     Here goes the title
                 </div>
 
-                <div class = 'container'></div>
+                <div class='container'></div>
                 <div class='row'>
-                    <div class = 'col-sm-6 left '>
+                    <div class='col-sm-6 left '>
                         Estimate:
                     </div>
                     <div class='col-sm-6 estimate'>
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class='row'>
-                    <div class = 'col-sm-6 left'>
+                    <div class='col-sm-6 left'>
                         Remaining:
                     </div>
                     <div class='col-sm-6'>
@@ -113,9 +113,9 @@
                 </div>
                
 
-                <div class = 'add hide'>
+                <div class='add hide'>
                     <div class='row'>
-                        <div class = 'col-sm-6 left'>
+                        <div class='col-sm-6 left'>
                             Status:
                         </div>
                         <div class='col-sm-6 st'>
@@ -124,7 +124,7 @@
                     </div>
 
                     <div class='row'>
-                        <div class = 'col-sm-6 left'>
+                        <div class='col-sm-6 left'>
                             Labels:
                         </div>
                         <div class='col-sm-6'>
@@ -138,13 +138,13 @@
             
     </div>
         
-    <div class = 'changeColName hide' id='changeColName'>
+    <div class='changeColName hide' id='changeColName'>
 
      
             <div class="row">
                 <div class='col-sm '>
                     New column name:
-                        <span class = 'error2 error'>Must contain at least 3 charachters</span>
+                        <span class='error2 error'>Must contain at least 3 charachters</span>
                         <input type="text" class='colName'>
                         <button class='saveCol'>Save</button>
                 </div>
@@ -156,7 +156,7 @@
         
     </div>
 
-    <div class = 't'>
+    <div class='t'>
     <h2>Drag and Drop</h2>
     <p>Drag the card back and forth between columns.</p>
     </div>
@@ -166,7 +166,7 @@
           $('[data-toggle="popover"]').popover({ trigger: "hover" });
         });
 
-        function allowDrop(ev) {
+       function allowDrop(ev) {
           ev.preventDefault();
         }
         

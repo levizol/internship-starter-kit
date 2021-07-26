@@ -14,12 +14,12 @@
 body {
     margin: 0;
     height: 100vh;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
-    font: 400 2rem/1.4 'Poppins', Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16pt;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
 header {
@@ -102,9 +102,7 @@ button:hover {
     display: flex;
     width: 100%;
     color: rgb(136, 136, 136);
-    font-weight: normal;
-    font-size: 16pt;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    
     align-items: stretch;
     justify-content: space-between;
    
@@ -117,7 +115,7 @@ button:hover {
     
 }
 
-.data{
+.data {
     background-color: #edf0f3;
     margin: 5px ;
     padding: 10px;
@@ -130,24 +128,12 @@ button:hover {
     background-color: #b7bbbe;
 }
 
-.label {
-
-    background-color: white;
-    display: block;
-    text-align: left;
-    top: 0;
-}
-
 .hide {
     display: none;
 }
 
-.addition, .delete {
-    color : rgb(143, 143, 143)(59, 57, 57)(65, 63, 63)(65, 63, 63);
-    margin-right: 10px;
-}
 
-.popup{
+.popup {
     background-color: white;
     border: 3px solid black;
     width: 80%;
@@ -156,7 +142,7 @@ button:hover {
     top:5%;
 }
 
-.container-flex{
+.container-flex {
     display: flex;
     width: 100%;
     font-weight: normal;
@@ -174,7 +160,7 @@ button:hover {
     margin-top: 60%;
 }
 
-.input{
+.input {
     display: block;
     margin: auto;
     margin-top: 15%;
@@ -186,7 +172,7 @@ button:hover {
     float: left;
 }
 
-.input .row{
+.input .row {
     margin-top: 10px;
 }
 
@@ -204,11 +190,11 @@ button:hover {
     padding-right: 0px;
 }
 
-.card:hover{
+.card:hover {
     background-color: rgb(166, 228, 247);
 }
 
-.remaining{
+.remaining {
    
     background-color: rgb(224, 222, 222);
     color:white;
@@ -224,11 +210,11 @@ button:hover {
 
 }
 
-.card .title{
+.card .title {
     color: black;
 }
 
-.card .filter{
+.card .filter {
     font-style: italic;
     margin-bottom: 50px;
 }
@@ -251,12 +237,12 @@ button:hover {
     padding-left: 30px;
 }
 
-.information .right{
+.information .right {
     text-align: right;
     padding-right: 30px;
 }
 
-.det{
+.det {
     margin-top: 40px;
 }
 
@@ -264,7 +250,7 @@ button:hover {
     margin: 20px;
 }
 
-.add .st{
+.add .st {
     display: inline;
     background-color: green;
     color: white;
@@ -304,7 +290,7 @@ button:hover {
     float: right;
 }
 
-.changeColName{
+.changeColName {
     border: 3px solid black;
     width: 80%;
     height:200px;
@@ -313,7 +299,7 @@ button:hover {
     background-color: white;
 }
 
-.colName{
+.colName {
     display: block;
     margin:auto;
 }
