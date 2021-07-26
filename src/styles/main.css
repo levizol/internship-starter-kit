@@ -3,6 +3,8 @@
     --secondary-color: #d7d149;
     --complementary-color: #edf2f6;
     --button-hover-color: #537ba4;
+    --jira-bg-color: #f4f5f7f3;
+
 
     font-size: 62.5%;
 }
@@ -11,7 +13,17 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+}
+  
+
 body {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    box-sizing: border-box;
+
     margin: 0;
     height: 100vh;
 
@@ -90,4 +102,137 @@ button:hover {
 @keyframes rotate {
     from {transform: rotate(0);}
     to {transform: rotate(180deg);}
+}
+
+
+
+/* JIRA BOARD */
+
+#jira-board{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    position: relative;
+    width: 70%;
+    padding-left: 30px;
+    
+
+}
+
+#jira-board *{
+    flex-grow: 1;
+    margin: 1px 3px;
+}
+
+.content-column {
+    background-color: var(--jira-bg-color);
+    min-height: 700px;
+    min-width: 100px;
+    padding-top: 1px;
+}
+
+
+/* MODAL */
+
+#modal , #modal2{
+    display: none; /* Hidden by default */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    margin: 0 auto;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+
+  }
+  
+  /* Modal Content */
+  #modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+  }
+
+  #modal-content2 {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+
+  }
+
+  .close {
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 1em;
+  }
+
+  .close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* To Dos */
+
+#jira-board .newToDo{
+    background-color: white;
+    border-left: 3px solid red;
+    border-radius: 3px;
+    padding: 2px;
+    margin-bottom: 5px;
+}
+
+#jira-board .newToDo-ID{
+    font-size: small;
+}
+
+#jira-board .newTodo-name{
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+#jira-board .newTodo-description{
+    font-style: italic;
+    font-size: 14px;
+}
+
+.dragging{
+    transition: all 0.3s;
+}
+
+span.fas.fa-plus{
+    float: right;
+    transition: all 0.3s;
+
+}
+
+.status{
+    background-color: green;
+    border-radius: 6px 
 }
