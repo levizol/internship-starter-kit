@@ -9,10 +9,18 @@
   "author": "Artsoft",
   "license": "ISC",
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "eslint": "^7.30.0",
     "eslint-config-google": "^0.14.0",
     "parcel-bundler": "^1.12.5",
     "posthtml-include": "^1.7.1"
-  }
+  },
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "module",
+    "url": "git+https://github.com/levizol/internship-starter-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/levizol/internship-starter-kit/issues"
+  },
+  "homepage": "https://github.com/levizol/internship-starter-kit#readme"
 }

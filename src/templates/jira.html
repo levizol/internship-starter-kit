@@ -1,0 +1,216 @@
+<main >
+
+   
+
+    Check out the Jira board!
+    <div class='col-container-flex'>
+        
+        <div class='column' id='col1'>
+            <div class = 'col-container-flex'>
+                <div class='label addition'><i class="far fa-plus-square"></i></div>
+                <div class='label delete'><i class="far fa-minus-square"></i></div>
+                <div class='label name'>TO DO  </div>
+                <div class='nr'>0</div>
+            </div>
+            
+            <div class='data' ondrop="drop(event)" ondragover="allowDrop(event)">
+                <include src='templates/blankColumn.html'></include>
+               
+            </div>
+        </div>
+        
+     
+        
+        <div class ='column' id='col2'>
+            <div class = 'col-container-flex'>
+                <div class='label addition'> </i></div>
+                <div class='label'>DONE</div>
+                <div class='nr'>0</div>
+            </div>
+            <div class='data' ondrop="drop(event)" ondragover="allowDrop(event)">
+                
+            </div>
+        </div>
+
+    </div>
+    
+    <div class='popup hide'>
+        <div class='row'>
+            <div class='col-sm-3'>
+                <div class='save'>
+                    <button id='addcard'>Save</button>
+                    
+                </div> 
+                    
+            </div>
+            <div class='col-sm-8 '>
+                
+                <div class='input'>
+                    
+                Add some information about the new task
+                       
+                
+                <div class='row'>
+                    <div class='col-sm-6'><label for="">Title <span class = 'error'></span></label></div>
+                    <div class='col-sm-6' id = 'title'>
+                        <input type="text" class="form-control" id='titleCard'>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-6'><label for="">Remaining</label></div>
+
+                    <div class='col-sm-6'>
+                        <div class="input-group">
+                            <i class="fas fa-pencil-alt"></i>
+                            <input type="text" placeholder="Unestimated" id='remaining' class="form-control" data-toggle="popover" data-placement="bottom" data-content='Remaining Estimate'>
+                        </div>
+                        
+                    </div>
+                   
+                        
+                   
+                    
+                </div>
+                </div>
+
+
+            </div>
+
+            <div class='col-sm-1 close' >
+                <i class="far fa-window-close"></i>
+            </div>
+        </div>
+    </div>
+       
+    <div class='information hide'>
+          
+                <div class='title'>
+                    Here goes the title
+                </div>
+
+                <div class='container'></div>
+                <div class='row'>
+                    <div class='col-sm-6 left '>
+                        Estimate:
+                    </div>
+                    <div class='col-sm-6 estimate'>
+                        Unestimated
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-sm-6 left'>
+                        Remaining:
+                    </div>
+                    <div class='col-sm-6'>
+                        <input type="text"  id='remaining2'>
+                    </div>
+                </div>
+              
+                
+                <div class='det left'>
+                    <i class="fas fa-chevron-circle-down"></i>
+                    Details 
+                </div>
+               
+
+                <div class='add hide'>
+                    <div class='row'>
+                        <div class='col-sm-6 left'>
+                            Status:
+                        </div>
+                        <div class='col-sm-6 st'>
+                            CLOSED
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='col-sm-6 left'>
+                            Labels:
+                        </div>
+                        <div class='col-sm-6'>
+                            None
+                        </div>
+                    </div>
+                </div>
+                <button><i class="fas fa-trash-alt"></i></button>
+            </div>
+       
+            
+    </div>
+        
+    <div class='changeColName hide' id='changeColName'>
+
+     
+            <div class="row">
+                <div class='col-sm '>
+                    New column name:
+                        <span class='error2 error'>Must contain at least 3 charachters</span>
+                        <input type="text" class='colName'>
+                        <button class='saveCol'>Save</button>
+                </div>
+                <div class='col-sm-1 close'>
+                    <i class="far fa-window-close"></i>
+                </div>
+            </div>
+        
+        
+    </div>
+
+    <div class='t'>
+    <h2>Drag and Drop</h2>
+    <p>Drag the card back and forth between columns.</p>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+          $('[data-toggle="popover"]').popover({ trigger: "hover" });
+        });
+
+       function allowDrop(ev) {
+          ev.preventDefault();
+        }
+        
+        function drag(ev) {
+          ev.dataTransfer.setData("text", ev.target.id);
+        }
+        
+        function drop(ev) {
+          ev.preventDefault();
+          var data = ev.dataTransfer.getData("text");
+          ev.target.appendChild(document.getElementById(data));
+
+            let cardid = document.getElementById(data).getAttribute('id');
+            let colid = ev.target.parentNode.getAttribute('id');
+            cardid = cardid.substring(4, cardid.length);
+            colid = colid.substring(3,colid.length);
+
+            cardid = parseInt(cardid);
+            colid = parseInt(colid);
+
+            let whereArray = localStorage.getItem('parentofCards');
+            whereArray = JSON.parse(whereArray);
+            whereArray[cardid] = colid;
+            whereArray = JSON.stringify(whereArray);
+            localStorage.setItem('parentofCards', whereArray);
+            updateNr();
+        }
+        function updateNr() {
+        let cards = localStorage.getItem('cardDetails');
+        cards = JSON.parse(cards);
+        let colnr = localStorage.getItem('colnr');
+        let parents = localStorage.getItem('parentofCards');
+        parents = JSON.parse(parents);
+        colnr = JSON.parse(colnr);
+        for (let i=1; i<=colnr; i++) {
+            let nr = 0;
+            for (let j=1; j<parents.length; j++) {
+            if (parents[j]==i && cards[j].visibility) nr++;
+            }
+            document.querySelector('#col' + i + ' .nr').innerHTML = nr;
+            }
+        }
+    </script>
+    
+</main>
+
+
