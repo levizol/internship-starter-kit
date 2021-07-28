@@ -25,5 +25,16 @@ class Ticket {
     this.estimate = estimateNr.toString();
     this.remaining = remaining;
   }
+  /**
+   * Static function that calculates the estimate from the remaining
+   * @param {string} remaining - the remaining of the ticket
+   * @return {string} estimate
+   */
+  static calculateEstimate(remaining) {
+    const remainingNr = Number(remaining);
+    const estimateNr = remainingNr / 4;
+    const estimate = estimateNr.toString();
+    return estimate;
+  }
 }
 export default Ticket;

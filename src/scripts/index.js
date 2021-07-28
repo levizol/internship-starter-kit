@@ -1,26 +1,8 @@
-import '../styles/main.css';
-import '../styles/ticketStyles.css';
-import '../styles/commentStyles.css';
 import Column from './Column';
 import Ticket from './Ticket';
 import TicketComment from './Comment';
 loadData();
 // refreshData();
-// eslint-disable-next-line require-jsdoc
-function refreshData() {
-  localStorage.clear();
-  const toDoColumn = new Column('To do', 'todo');
-  const normalColumn = new Column('Tasks', '');
-  const doneColumn = new Column('Done', 'done');
-  const ticket1 =
-  new Ticket('ISA-293', 'Finish Board', 'Integrate Storage', '5');
-  toDoColumn.addTicket(ticket1);
-  const columns = [];
-  columns.push(toDoColumn);
-  columns.push(normalColumn);
-  columns.push(doneColumn);
-  localStorage.setItem('columns', JSON.stringify(columns));
-}
 
 /**
    * Function.
@@ -75,7 +57,6 @@ function createColumn(column) {
 function setTicketListeners(ticket) {
   const remainingWrapper = ticket
       .querySelector('.editTicketWrapper.remainingWrapper');
-  const ticketRemainingEdit = ticket.querySelector('.editRemaining');
   ticket.querySelector('.ticket').addEventListener('click', showTicketEdit);
   const closeTicket = ticket.querySelector('i.fa-times');
   closeTicket.addEventListener('click', hideTicketEdit);
@@ -108,7 +89,7 @@ function setTicketListeners(ticket) {
 function loadData() {
   const board = document.querySelector('.board');
   const columns = JSON.parse(localStorage.getItem('columns'));
-  for (let i = 0; i <columns.length; i++) {
+  for (let i = 0; i < columns.length; i++) {
     board.appendChild(createColumn(columns[i]));
   }
   const content = document.querySelector('.toDoColumn .content');
@@ -119,7 +100,6 @@ function loadData() {
   setAllowDrop();
   setButtonListeners();
   setColumnActions();
-  // setCommentListeners();
 }
 /**
    * Function.
@@ -130,27 +110,12 @@ function loadData() {
    */
 function findPosition(columnID) {
   const columns = JSON.parse(localStorage.getItem('columns'));
-  for (let i = 0; i <columns.length; i++) {
+  for (let i = 0; i < columns.length; i++) {
     if (columns[i].id === columnID) {
       return i;
     }
   }
   return -1;
-}
-/**
- * Function
- * Returns the position of the ticket with the id
- * in the localStorage
- * @param {string} ticketID - the ticket ID
- * @param {number} columnPos - the column position in local storage
- * @return {number} position - the position of the ticket
- */
-function findPositionTicket(ticketID, columnPos) {
-  const columns = JSON.parse(localStorage.getItem('columns'));
-  const position = columns[columnPos].tickets.findIndex((el)=> {
-    el.id === ticketID;
-  });
-  return position;
 }
 /**
    * Function.
@@ -196,13 +161,6 @@ function deleteColumn() {
   const board = document.querySelector('.board');
   board.removeChild(column);
   hideConfirmDeleteModal();
-}
-// eslint-disable-next-line require-jsdoc
-function calcEstimate(remaining) {
-  const remainingNr = Number(remaining);
-  const estimateNr = remainingNr / 4;
-  const estimate = estimateNr.toString();
-  return estimate;
 }
 /**
    * Function.
@@ -501,8 +459,8 @@ function updateTicketData(ticket, ticketObj, column) {
  */
 function updateTicketComments(ticket, ticketObj) {
   const commentList = ticket.querySelector('.userComments');
-  commentList.innerHTML ='';
-  for (let i=0; i < ticketObj.comments.length; i++) {
+  commentList.innerHTML = '';
+  for (let i = 0; i < ticketObj.comments.length; i++) {
     const templateCom = document.querySelector('#Comment');
     const comment = templateCom.content.cloneNode(true);
     const commentID = comment.querySelector('.commentID');
@@ -528,10 +486,11 @@ function updateTicketRemaining(event) {
   const columnID = column.querySelector('.columnID').innerText;
   const columns = JSON.parse(localStorage.getItem('columns'));
   const posColumn = findPosition(columnID);
-  for (let i=0; i<columns[posColumn].tickets.length; i++) {
+  for (let i=0; i < columns[posColumn].tickets.length; i++) {
     if (columns[posColumn].tickets[i].id === ticketIDVal) {
       columns[posColumn].tickets[i].remaining = newValue;
-      columns[posColumn].tickets[i].estimate = calcEstimate(newValue);
+      columns[posColumn].tickets[i].estimate = Ticket
+          .calculateEstimate(newValue);
       updateTicketData(ticket, columns[posColumn].tickets[i], column);
     }
   }

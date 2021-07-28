@@ -1,3 +1,8 @@
+@import url('./columnStyles.css');
+@import url('./commentStyles.css');
+@import url('./ticketStyles.css');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 :root {
     --primary-color: #1a3755;
     --secondary-color: #d7d149;
@@ -20,7 +25,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* font-family: 'Raleway', sans-serif; */
     font: 500 2rem/1.4 'Raleway', sans-serif;
 }
 
@@ -100,7 +104,6 @@ button:hover {
     justify-content: center;
 
     padding: auto;
-    /* flex-grow: 1; */
 }
 h5.warning {
     color: red;
