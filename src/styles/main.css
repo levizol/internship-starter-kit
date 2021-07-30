@@ -1,8 +1,15 @@
+@import url('./columnStyles.css');
+@import url('./commentStyles.css');
+@import url('./ticketStyles.css');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 :root {
     --primary-color: #1a3755;
     --secondary-color: #d7d149;
     --complementary-color: #edf2f6;
     --button-hover-color: #537ba4;
+    --column-backgroud : linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+    --span-hover-color: rgb(213, 243, 145);
 
     font-size: 62.5%;
 }
@@ -14,12 +21,11 @@
 body {
     margin: 0;
     height: 100vh;
-
+    overflow: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
-    font: 400 2rem/1.4 'Poppins', Helvetica, Arial, sans-serif;
+    font: 500 2rem/1.4 'Raleway', sans-serif;
 }
 
 header {
@@ -31,10 +37,19 @@ header {
 
 main {
     width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-
     text-align: center;
+    /* position: absolute; */
+    /* top: 0;
+    bottom: 0;
+    left: 0; */
+    /* width: 600px; */
+
+}
+i {
+    cursor: pointer;
+}
+i:hover {
+    color: var(--span-hover-color);
 }
 
 footer {
@@ -82,12 +97,77 @@ button:hover {
 .button, .button-cta {
     transition: transform 500ms cubic-bezier(1, 0.01, 0.57, 1.35);
 }
+.board {
+    font-size: small;
+    display: flex;
 
-.active {
-    transform: translateY(50%);
+    justify-content: center;
+
+    padding: auto;
 }
-
+h5.warning {
+    color: red;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.modalContent {
+    animation-name: sweepModal;
+    animation-duration: 1s;
+    margin: auto;
+    padding: 20px;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    display: flex;
+    border-radius: 2rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #888;
+    width: 60%;
+}
+.buttonWrapper {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-around;
+}
 @keyframes rotate {
     from {transform: rotate(0);}
     to {transform: rotate(180deg);}
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+  }
+@keyframes sweepModal {
+    0% {
+      transform: translateY(-100px);
+    }
+    100% {
+      transform: translateY(0);  
+    }
+}
+@keyframes scaleIn {
+    0% {
+        transform: scale(0.5);
+    }
+    100% {
+        transform: scale(1);
+    }   
+}
+@keyframes scaleOut {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0.5);
+    }
+    
 }

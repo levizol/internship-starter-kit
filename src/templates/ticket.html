@@ -1,0 +1,106 @@
+<template id="ticket">
+    <div draggable="true" class="ticket">
+        <p class="ticketID"></p>
+        <p class="ticketNr"></p>
+        <b><p class="ticketTitle"></p></b>
+        <p class="ticketLabel"></p>
+        <div class="editTicket">
+            <div class="editTicketContent">
+                <div class="editTicketHeader">
+                    <div class="editTicketNumber">
+                        Title
+                    </div>
+                    <div class="editTicketOptions">
+                        <div class="deleteTicketButton">
+                            <i class="fas fa-ellipsis-h"></i>
+                            <div class="deleteTicketOption">
+                                <span class="deleteTicket">Delete ticket</span>
+                                <span class="addCommentTicket">Add comment</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div>
+                   <b><p class="editTicketTitle"></p></b>
+                </div>
+                <div class="editTicketWrapper">
+                    <p>Estimate:</p>
+                    <p class="editTicketEstimate"></p>
+                </div>
+                <div class="editTicketWrapper remainingWrapper">
+                    <p>
+                        Remaining:
+                    </p>
+                    <p class="editTicketRemaining">
+                    </p>
+                    <div class="editRemaining">
+                        <div class="ticketRemainingWrapper">
+                            <input class="ticketRemainingEdit"/>
+                            <i class="fas fa-pen"></i>
+                        </div>
+                        <div class="remainingLabel">
+                            Remaining estimate
+                        </div>
+                        <div class="inputButtons">
+                            <i class="fas fa-check-square"></i>
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="editTicketDetails">
+                    <i class="fas fa-chevron-down"></i>
+                    <p>
+                        <b>
+                           Details
+                        </b>
+                    </p>
+                </div>
+                <div class="editTicketWrapper">
+                    <p>
+                        Status:
+                    </p>
+                    <b>
+                        <p class="editTicketStatus editTicketStatusColor">
+
+                        </p>
+                    </b>                    
+                </div>
+                <div class="editTicketWrapper">
+                    <p>
+                        Label:
+                    </p>
+                    <p class="editTicketLabel">
+
+                    </p>
+                </div>
+                <div class="editTicketWrapper">
+                    <p>
+                        User comments:
+                    </p>
+                    
+                </div>
+                <div class="editTicketComments">
+                    <div class="userComments">
+                      
+                    </div>
+                </div>
+                <div class="editTicketWrapper newCommentWrapper">
+                    <label for="newCommentInput">New comment:</label>
+                    <input class="newCommentInput">
+                    <div class="newCommentButtons">
+                        <i class="fas fa-check-square"></i>
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="ticketRemaining">
+            
+        </div>
+        <div class="ticketSign">
+           
+        </div>
+    </div>
+</template>

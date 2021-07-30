@@ -1,0 +1,86 @@
+.columnHeader {
+    position: relative;
+    display: flex;
+    height: 50px;
+    font-weight: 600;
+    border-radius: 5px;
+    border-width: 2px;
+    justify-content: space-between;
+    align-items: center;
+    background-image: var(--column-backgroud);
+    padding: 10px;
+}
+.columnID {
+    display: none;
+}
+.col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+    margin:10px;
+    position: relative;
+    min-width: 250px;
+    width: auto;
+    max-width: 300px;
+    animation: scaleIn 0.5s ease;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 2px;
+    justify-content: flex-start;
+    background-image: var(--column-backgroud);
+    flex-grow: 1;
+  
+    overflow: auto;
+    align-items: stretch;
+}
+.toDoColumn {
+    order: 1;
+}
+.doneColumn {
+    order: 999;
+}
+.column {
+    order: 2;
+}
+.columnActions {
+    animation: fadeIn 0.5s ease;
+    display: none;
+    padding: 10px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.editButton {
+    position: relative;
+}
+.editOptions{
+  visibility: hidden;
+  width: 150px;
+  background-color: #555;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+.editOptions span {
+    cursor: pointer;
+    padding: 10px;
+}
+.editOptions span:hover{
+    color:var(--span-hover-color);
+}
+.editButton .editShow {
+    visibility: visible;
+    animation: fadeIn 0.5s;
+}
